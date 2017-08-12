@@ -1,4 +1,4 @@
-package com.example.stream.stream_eb;
+package com.example.stream.eb;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.stream.stream_eb.test", appContext.getPackageName());
+        assertEquals("com.example.stream.eb.test", appContext.getPackageName());
     }
 }

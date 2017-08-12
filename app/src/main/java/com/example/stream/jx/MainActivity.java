@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.example.stream.stream_core.app.StreamCore;
+import com.example.stream.core.app.app.StreamCore;
 
 public class MainActivity extends AppCompatActivity {
 

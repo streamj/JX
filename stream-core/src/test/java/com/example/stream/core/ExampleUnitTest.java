@@ -1,4 +1,4 @@
-package com.example.stream.stream_core;
+package com.example.stream.core;
 
 import org.junit.Test;
 

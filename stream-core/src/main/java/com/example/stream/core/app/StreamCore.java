@@ -1,4 +1,4 @@
-package com.example.stream.stream_core.app;
+package com.example.stream.core.app.app;
 
 import android.content.Context;
 

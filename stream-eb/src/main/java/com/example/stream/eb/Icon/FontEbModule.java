@@ -1,4 +1,4 @@
-package com.example.stream.stream_eb.Icon;
+package com.example.stream.eb.Icon;
 
 import com.joanzapata.iconify.Icon;
 import com.joanzapata.iconify.IconFontDescriptor;
