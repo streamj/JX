@@ -2,7 +2,7 @@ package com.example.stream.jx;
 
 import android.app.Application;
 
-import com.example.stream.core.app.app.StreamCore;
+import com.example.stream.core.app.StreamCore;
 import com.example.stream.eb.Icon.FontEbModule;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
 

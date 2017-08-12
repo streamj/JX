@@ -1,4 +1,4 @@
-package com.example.stream.core.app.app;
+package com.example.stream.core.app;
 
 import com.joanzapata.iconify.IconFontDescriptor;
 import com.joanzapata.iconify.Iconify;

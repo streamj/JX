@@ -1,4 +1,4 @@
-package com.example.stream.core.app.app;
+package com.example.stream.core.app;
 
 /**
  * Created by StReaM on 8/12/2017.

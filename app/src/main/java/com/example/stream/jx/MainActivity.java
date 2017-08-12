@@ -1,18 +1,13 @@
 package com.example.stream.jx;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.widget.Toast;
+import com.example.stream.core.activies.ProxyActivity;
+import com.example.stream.core.delegates.StreamDelegate;
 
-import com.example.stream.core.app.app.StreamCore;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends ProxyActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        Toast.makeText(StreamCore.getApplicationContext(), "The Context has been arrived", Toast.LENGTH_LONG).show();
+    public StreamDelegate setRootDelegate() {
+        return new MainDelegate();
     }
 }
