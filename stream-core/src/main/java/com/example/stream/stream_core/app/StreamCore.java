@@ -2,7 +2,7 @@ package com.example.stream.stream_core.app;
 
 import android.content.Context;
 
-import java.util.WeakHashMap;
+import java.util.HashMap;
 
 /**
  * Created by StReaM on 8/12/2017.
@@ -14,7 +14,11 @@ public final class StreamCore {
         return Configurator.getInstance();
     }
 
-    private static WeakHashMap<String, Object> getConfigurations(){
+    private static HashMap<String, Object> getConfigurations(){
         return Configurator.getInstance().getStreamConfigs();
+    }
+
+    public static Context getApplicationContext() {
+        return (Context) getConfigurations().get(ConfigType.APPLICATION_CONTEXT.name());
     }
 }

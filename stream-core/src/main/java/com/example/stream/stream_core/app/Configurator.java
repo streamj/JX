@@ -1,6 +1,10 @@
 package com.example.stream.stream_core.app;
 
-import java.util.WeakHashMap;
+import com.joanzapata.iconify.IconFontDescriptor;
+import com.joanzapata.iconify.Iconify;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by StReaM on 8/12/2017.
@@ -8,7 +12,8 @@ import java.util.WeakHashMap;
 
 public class Configurator {
 
-    private static final WeakHashMap<String, Object> STREAM_CONFIGS = new WeakHashMap<>();
+    private static final HashMap<String, Object> STREAM_CONFIGS = new HashMap<>();
+    private static final ArrayList<IconFontDescriptor> ICONS = new ArrayList<>();
 
     private Configurator(){
         STREAM_CONFIGS.put(ConfigType.CONFIG_READY.name(), false);
@@ -18,7 +23,7 @@ public class Configurator {
         return Holder.INSTANCE;
     }
 
-    final WeakHashMap<String, Object> getStreamConfigs(){
+    final HashMap<String, Object> getStreamConfigs(){
         return STREAM_CONFIGS;
     }
 
@@ -27,11 +32,26 @@ public class Configurator {
     }
 
     public final void congfigure() {
+        initIcons();
         STREAM_CONFIGS.put(ConfigType.CONFIG_READY.name(), true);
     }
 
     public final Configurator withApiHost(String host) {
         STREAM_CONFIGS.put(ConfigType.API_HOST.name(), host);
+        return this;
+    }
+
+    private void initIcons() {
+        if (ICONS.size() > 0) {
+            final Iconify.IconifyInitializer initializer = Iconify.with(ICONS.get(0));
+            for (int i = 1; i < ICONS.size(); i++) {
+                initializer.with(ICONS.get(i));
+            }
+        }
+    }
+
+    public final Configurator withIcon(IconFontDescriptor descriptor) {
+        ICONS.add(descriptor);
         return this;
     }
 
