@@ -3,6 +3,7 @@ package com.example.stream.core.network;
 import com.example.stream.core.app.ConfigType;
 import com.example.stream.core.app.StreamCore;
 
+import java.util.WeakHashMap;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -14,6 +15,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
  */
 
 public class RestCreator {
+
     public static RestService getRestService(){
         return RestServiceHolder.REST_SERVICE;
     }
@@ -35,8 +37,16 @@ public class RestCreator {
                 .build();
     }
 
+    private static final class ParamsHolder {
+        public static final WeakHashMap<String ,Object> PARAMS = new WeakHashMap<>();
+    }
+
     private static final class RestServiceHolder {
         private static final RestService REST_SERVICE =
                 RetrofitHolder.RETROFIT_CLIENT.create(RestService.class);
+    }
+
+    public static WeakHashMap<String, Object> getParams(){
+        return ParamsHolder.PARAMS;
     }
 }
