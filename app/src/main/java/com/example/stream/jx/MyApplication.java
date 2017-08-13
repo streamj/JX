@@ -15,7 +15,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         StreamCore.init(this)
-//                .withApiHost()
+                .withApiHost("http://127.0.0.1")
                 .withIcon(new FontAwesomeModule())
                 .withIcon(new FontEbModule())
                 .congfigure();

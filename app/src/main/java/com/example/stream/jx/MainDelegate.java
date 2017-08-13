@@ -47,6 +47,6 @@ public class MainDelegate extends StreamDelegate {
                     public void onError(int code, String msg) {
                         Toast.makeText(getContext(), "Error code: " + code + " [" + msg + "]", Toast.LENGTH_LONG).show();
                     }
-                }).build();
+                }).build().get();
     }
 }
