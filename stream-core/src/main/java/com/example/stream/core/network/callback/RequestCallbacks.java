@@ -1,5 +1,10 @@
 package com.example.stream.core.network.callback;
 
+import android.os.Handler;
+
+import com.example.stream.core.ui.LoadStyle;
+import com.example.stream.core.ui.StreamLoader;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -13,12 +18,16 @@ public class RequestCallbacks implements Callback<String> {
     private final ISuccess SUCCESS;
     private final IError ERROR;
     private final IFailure FAILURE;
+    private final LoadStyle LOADER_STYLE;
+    private static final Handler HANDLER = new Handler();
 
-    public RequestCallbacks(IRequest request, ISuccess success, IError error, IFailure failure) {
+    public RequestCallbacks(IRequest request, ISuccess success, IError error,
+                            IFailure failure, LoadStyle loadStyle) {
         REQUEST = request;
         SUCCESS = success;
         ERROR = error;
         FAILURE = failure;
+        LOADER_STYLE = loadStyle;
     }
 
     @Override
@@ -34,6 +43,8 @@ public class RequestCallbacks implements Callback<String> {
                 ERROR.onError(response.code(), response.message());
             }
         }
+
+        stopLoading();
     }
 
     @Override
@@ -44,6 +55,19 @@ public class RequestCallbacks implements Callback<String> {
 
         if (REQUEST!= null) {
             REQUEST.onRequestEnd();
+        }
+
+        stopLoading();
+    }
+
+    private void stopLoading() {
+        if (LOADER_STYLE != null) {
+            HANDLER.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    StreamLoader.stopLoading();
+                }
+            }, 1000);
         }
     }
 }

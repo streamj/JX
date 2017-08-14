@@ -30,6 +30,7 @@ public class MainDelegate extends StreamDelegate {
         RestClient.Builder()
                 .url("http://news.baidu.com/")
 //                .params("","")
+                .loaderStyle(getContext())
                 .success(new ISuccess() {
                     @Override
                     public void onSuccess(String response) {

@@ -1,10 +1,14 @@
 package com.example.stream.core.network;
 
+import android.content.Context;
+
 import com.example.stream.core.network.callback.IError;
 import com.example.stream.core.network.callback.IFailure;
 import com.example.stream.core.network.callback.IRequest;
 import com.example.stream.core.network.callback.ISuccess;
 import com.example.stream.core.network.callback.RequestCallbacks;
+import com.example.stream.core.ui.LoadStyle;
+import com.example.stream.core.ui.StreamLoader;
 
 import java.util.Map;
 
@@ -26,9 +30,12 @@ public class RestClient {
     private final IError ERROR;
     private final IFailure FAILURE;
     private final RequestBody BODY;
+    private final LoadStyle LOADER_STYLE;
+    private final Context CONTEXT;
 
     public RestClient(String url, Map<String, Object> params, IRequest request,
-                      ISuccess success, IError error, IFailure failure, RequestBody body) {
+                      ISuccess success, IError error, IFailure failure,
+                      RequestBody body, LoadStyle style, Context context) {
         URL = url;
         PARAMS.putAll(params);
         REQUEST = request;
@@ -36,6 +43,8 @@ public class RestClient {
         ERROR = error;
         FAILURE = failure;
         BODY = body;
+        LOADER_STYLE = style;
+        CONTEXT = context;
     }
 
     public static RestClientBuilder Builder() {
@@ -49,6 +58,11 @@ public class RestClient {
         if (REQUEST != null) {
             REQUEST.onRequestStart();
         }
+
+        if (LOADER_STYLE != null) {
+            StreamLoader.showLoading(CONTEXT, LOADER_STYLE);
+        }
+
         switch (method) {
             case GET:
                 call =service.get(URL, PARAMS);
@@ -72,7 +86,7 @@ public class RestClient {
     }
 
     private Callback<String> getRequestCallback() {
-        return new RequestCallbacks(REQUEST, SUCCESS, ERROR, FAILURE);
+        return new RequestCallbacks(REQUEST, SUCCESS, ERROR, FAILURE, LOADER_STYLE);
     }
 
     public final void get(){
