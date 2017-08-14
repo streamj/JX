@@ -10,12 +10,14 @@ import com.example.stream.core.network.callback.RequestCallbacks;
 import com.example.stream.core.ui.LoadStyle;
 import com.example.stream.core.ui.StreamLoader;
 
+import java.io.File;
 import java.util.Map;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by StReaM on 8/13/2017.
@@ -31,11 +33,13 @@ public class RestClient {
     private final IFailure FAILURE;
     private final RequestBody BODY;
     private final LoadStyle LOADER_STYLE;
+    private final File FILE;
     private final Context CONTEXT;
 
     public RestClient(String url, Map<String, Object> params, IRequest request,
                       ISuccess success, IError error, IFailure failure,
-                      RequestBody body, LoadStyle style, Context context) {
+                      RequestBody body, LoadStyle style, File file,
+                      Context context) {
         URL = url;
         PARAMS.putAll(params);
         REQUEST = request;
@@ -44,6 +48,7 @@ public class RestClient {
         FAILURE = failure;
         BODY = body;
         LOADER_STYLE = style;
+        FILE = file;
         CONTEXT = context;
     }
 
@@ -70,12 +75,23 @@ public class RestClient {
             case POST:
                 call = service.post(URL, PARAMS);
                 break;
+            case POST_RAW:
+                call = service.postRaw(URL, BODY);
+                break;
             case PUT:
                 call = service.put(URL, PARAMS);
                 break;
+            case PUT_RAW:
+                call = service.postRaw(URL, BODY);
             case DELETE:
                 call = service.delete(URL, PARAMS);
                 break;
+            case UPLOAD:
+                final RequestBody requestBody = RequestBody
+                        .create(MediaType.parse(MultipartBody.FORM.toString()), FILE);
+                final MultipartBody.Part body = MultipartBody
+                        .Part.createFormData("file", FILE.getName(), requestBody);
+                call = service.upload(URL,body);
             default:
                 break;
         }
@@ -94,11 +110,25 @@ public class RestClient {
     }
 
     public final void post(){
-        request(HttpMethod.POST);
+        if (BODY == null) {
+            request(HttpMethod.POST);
+        } else {
+            if (!PARAMS.isEmpty()) {
+                throw new RuntimeException("parameters not null");
+            }
+            request(HttpMethod.POST_RAW);
+        }
     }
 
     public final void put(){
-        request(HttpMethod.PUT);
+        if(BODY == null) {
+            request(HttpMethod.PUT);
+        } else {
+            if (!PARAMS.isEmpty()) {
+                throw new RuntimeException("parameters not null");
+            }
+            request(HttpMethod.PUT_RAW);
+        }
     }
 
     public final void delete(){

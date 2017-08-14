@@ -9,6 +9,7 @@ import com.example.stream.core.network.callback.IRequest;
 import com.example.stream.core.network.callback.ISuccess;
 import com.example.stream.core.ui.LoadStyle;
 
+import java.io.File;
 import java.util.WeakHashMap;
 
 import okhttp3.MediaType;
@@ -28,6 +29,7 @@ public class RestClientBuilder {
     private IFailure mIFailure = null;
     private RequestBody mBody = null;
     private LoadStyle mLoadStyle = null;
+    private File mFile = null;
     private Context mContext = null;
 
     RestClientBuilder() {
@@ -85,9 +87,19 @@ public class RestClientBuilder {
         return this;
     }
 
+    public final RestClientBuilder file(File file) {
+        mFile = file;
+        return this;
+    }
+
+    public final RestClientBuilder file(String path) {
+        mFile = new File(path);
+        return this;
+    }
+
     public final RestClient build(){
         return new RestClient(mUrl, PARAMS, mIRequest, mISuccess, mIError,
-                mIFailure, mBody, mLoadStyle, mContext);
+                mIFailure, mBody, mLoadStyle, mFile, mContext);
     }
 
 }
