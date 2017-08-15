@@ -2,12 +2,16 @@ package com.example.stream.core.util.file;
 
 import android.os.Environment;
 
+import com.example.stream.core.app.StreamCore;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -18,12 +22,12 @@ import java.util.Locale;
 
 public class FileUtil {
     private static final String TIME_FORMAT = "_yyyyMMdd_HHmmss";
-    private static final String SDCARD_DIR =
-            Environment.getExternalStorageDirectory().getPath();
+    private static final String SDCARD_DIR = Environment
+            .getExternalStorageDirectory().getPath();
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     private static File createDir(String sdcardDirName) {
-        //拼接成SD卡中完整的dir
+        // 拼接成SD卡中完整的dir
         final String dir = SDCARD_DIR + "/" + sdcardDirName + "/";
         final File fileDir = new File(dir);
         if (!fileDir.exists()) {
@@ -54,7 +58,8 @@ public class FileUtil {
         return new File(createDir(sdcardDirName), fileName);
     }
 
-    private static File createFileByTime(String sdcardDirName, String timeFormatHeader, String postfix) {
+    private static File createFileByTime(String sdcardDirName, String timeFormatHeader,
+                                         String postfix) {
         final String fileName = getFileNameByTime(timeFormatHeader, postfix);
         return createFile(sdcardDirName, fileName);
     }
@@ -107,7 +112,6 @@ public class FileUtil {
                 e.printStackTrace();
             }
         }
-
         return file;
     }
 
@@ -148,7 +152,36 @@ public class FileUtil {
                 e.printStackTrace();
             }
         }
-
         return file;
+    }
+
+    /**
+     * 读取raw目录中的文件,并返回为字符串
+     */
+    public static String getRawFile(int id) {
+        final InputStream is = StreamCore
+                .getApplicationContext().getResources().openRawResource(id);
+        final BufferedInputStream bis = new BufferedInputStream(is);
+        final InputStreamReader isr = new InputStreamReader(bis);
+        final BufferedReader br = new BufferedReader(isr);
+        final StringBuilder stringBuilder = new StringBuilder();
+        String str;
+        try {
+            while ((str = br.readLine()) != null) {
+                stringBuilder.append(str);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                br.close();
+                isr.close();
+                bis.close();
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return stringBuilder.toString();
     }
 }

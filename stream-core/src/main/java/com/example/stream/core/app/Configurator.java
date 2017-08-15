@@ -6,14 +6,17 @@ import com.joanzapata.iconify.Iconify;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import okhttp3.Interceptor;
+
 /**
  * Created by StReaM on 8/12/2017.
  */
 
 public class Configurator {
 
-    private static final HashMap<String, Object> STREAM_CONFIGS = new HashMap<>();
+    private static final HashMap<Object, Object> STREAM_CONFIGS = new HashMap<>();
     private static final ArrayList<IconFontDescriptor> ICONS = new ArrayList<>();
+    private static final ArrayList<Interceptor> INTERCEPTORS = new ArrayList<>();
 
     private Configurator(){
         STREAM_CONFIGS.put(ConfigType.CONFIG_READY.name(), false);
@@ -23,7 +26,7 @@ public class Configurator {
         return Holder.INSTANCE;
     }
 
-    final HashMap<String, Object> getStreamConfigs(){
+    final HashMap<Object, Object> getStreamConfigs(){
         return STREAM_CONFIGS;
     }
 
@@ -55,6 +58,18 @@ public class Configurator {
         return this;
     }
 
+    public final Configurator withInterceptor(Interceptor interceptor) {
+        INTERCEPTORS.add(interceptor);
+        STREAM_CONFIGS.put(ConfigType.INTERCEPTOR, INTERCEPTORS);
+        return this;
+    }
+
+    public final Configurator withInterceptors(ArrayList<Interceptor> interceptors) {
+        INTERCEPTORS.addAll(interceptors);
+        STREAM_CONFIGS.put(ConfigType.INTERCEPTOR, INTERCEPTORS);
+        return this;
+    }
+
     private void checkConfiguration() {
         final boolean isReady = (boolean) STREAM_CONFIGS.get(ConfigType.CONFIG_READY.name());
         if(!isReady) {
@@ -63,8 +78,8 @@ public class Configurator {
     }
 
     @SuppressWarnings("unchecked")
-    final <T> T getConfiguration(Enum<ConfigType> key){
+    final <T> T getConfiguration(Object key){
         checkConfiguration();
-        return (T) STREAM_CONFIGS.get(key.name());
+        return (T) STREAM_CONFIGS.get(key);
     }
 }

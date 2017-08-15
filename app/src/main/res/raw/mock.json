@@ -1,0 +1,20 @@
+{
+  "color_scheme": "Packages/Theme - itg.flat/itg.Monokai.tmTheme",
+  "font_face": "hack",
+  "font_size": 11,
+  "highlight_line": true,
+  "highlight_modified_tabs": true,
+  "ignored_packages":
+  [
+    "Vintage"
+  ],
+  "itg_small_tabs": true,
+  "rulers":
+  [
+    80,
+    100
+  ],
+  "theme": "itg.flat.dark.sublime-theme",
+  "translate_tabs_to_spaces": true,
+  "word_wrap": true
+}

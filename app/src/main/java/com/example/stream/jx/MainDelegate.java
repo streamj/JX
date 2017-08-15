@@ -28,7 +28,7 @@ public class MainDelegate extends StreamDelegate {
 
     private void testRestClient(){
         RestClient.Builder()
-                .url("http://news.baidu.com/")
+                .url("http://127.0.0.1/index")
 //                .params("","")
                 .loaderStyle(getContext())
                 .success(new ISuccess() {

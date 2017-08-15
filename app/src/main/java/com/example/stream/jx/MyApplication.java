@@ -3,6 +3,7 @@ package com.example.stream.jx;
 import android.app.Application;
 
 import com.example.stream.core.app.StreamCore;
+import com.example.stream.core.network.interceptors.DebugInterceptor;
 import com.example.stream.eb.Icon.FontEbModule;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
 
@@ -18,6 +19,7 @@ public class MyApplication extends Application {
                 .withApiHost("http://127.0.0.1")
                 .withIcon(new FontAwesomeModule())
                 .withIcon(new FontEbModule())
+                .withInterceptor(new DebugInterceptor("index", R.raw.mock))
                 .congfigure();
     }
 }
