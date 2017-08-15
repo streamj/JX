@@ -7,6 +7,7 @@ import com.example.stream.core.network.callback.IFailure;
 import com.example.stream.core.network.callback.IRequest;
 import com.example.stream.core.network.callback.ISuccess;
 import com.example.stream.core.network.callback.RequestCallbacks;
+import com.example.stream.core.network.download.DownloadHandler;
 import com.example.stream.core.ui.LoadStyle;
 import com.example.stream.core.ui.StreamLoader;
 
@@ -34,11 +35,15 @@ public class RestClient {
     private final RequestBody BODY;
     private final LoadStyle LOADER_STYLE;
     private final File FILE;
+    private final String DOWNLOAD_DIR;
+    private final String POSTFIX;
+    private final String SAVED_FILE_NAME;
     private final Context CONTEXT;
 
     public RestClient(String url, Map<String, Object> params, IRequest request,
                       ISuccess success, IError error, IFailure failure,
                       RequestBody body, LoadStyle style, File file,
+                      String downloadDir, String postfix, String savedFileName,
                       Context context) {
         URL = url;
         PARAMS.putAll(params);
@@ -49,6 +54,9 @@ public class RestClient {
         BODY = body;
         LOADER_STYLE = style;
         FILE = file;
+        DOWNLOAD_DIR = downloadDir;
+        POSTFIX = postfix;
+        SAVED_FILE_NAME = savedFileName;
         CONTEXT = context;
     }
 
@@ -133,6 +141,15 @@ public class RestClient {
 
     public final void delete(){
         request(HttpMethod.DELETE);
+    }
+
+    public final void upload() {
+        request(HttpMethod.UPLOAD);
+    }
+
+    public final void download() {
+        new DownloadHandler(URL, REQUEST, SUCCESS, ERROR, FAILURE, DOWNLOAD_DIR,
+                POSTFIX, SAVED_FILE_NAME).handleDownload();
     }
 
 }

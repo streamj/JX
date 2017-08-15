@@ -1,4 +1,4 @@
-package com.example.stream.core.util;
+package com.example.stream.core.util.dimen;
 
 import android.content.res.Resources;
 import android.util.DisplayMetrics;

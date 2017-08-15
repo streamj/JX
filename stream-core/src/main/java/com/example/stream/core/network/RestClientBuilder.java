@@ -30,6 +30,9 @@ public class RestClientBuilder {
     private RequestBody mBody = null;
     private LoadStyle mLoadStyle = null;
     private File mFile = null;
+    private String mDownloadDir = null;
+    private String mPostfix = null;
+    private String mSavedFileName = null;
     private Context mContext = null;
 
     RestClientBuilder() {
@@ -97,9 +100,26 @@ public class RestClientBuilder {
         return this;
     }
 
+    public final RestClientBuilder name(String name) {
+        mSavedFileName = name;
+        return this;
+    }
+
+
+    public final RestClientBuilder dir(String path) {
+        mDownloadDir = path;
+        return this;
+    }
+
+    public final RestClientBuilder postfix(String postfix) {
+        mPostfix = postfix;
+        return this;
+    }
+
     public final RestClient build(){
         return new RestClient(mUrl, PARAMS, mIRequest, mISuccess, mIError,
-                mIFailure, mBody, mLoadStyle, mFile, mContext);
+                mIFailure, mBody, mLoadStyle, mFile, mDownloadDir, mPostfix,
+                mSavedFileName, mContext);
     }
 
 }
