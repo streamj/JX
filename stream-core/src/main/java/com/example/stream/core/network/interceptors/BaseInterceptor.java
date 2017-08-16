@@ -7,17 +7,12 @@ import okhttp3.FormBody;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.Request;
-import okhttp3.Response;
 
 /**
  * Created by StReaM on 8/15/2017.
  */
 
-public class BaseInterceptor implements Interceptor {
-    @Override
-    public Response intercept(Chain chain) throws IOException {
-        return null;
-    }
+public abstract class BaseInterceptor implements Interceptor {
 
     protected LinkedHashMap<String, String> getUrlParameters(Chain chain) {
         final HttpUrl url = chain.request().url();

@@ -1,6 +1,6 @@
 package com.example.stream.core.network;
 
-import java.util.Map;
+import java.util.WeakHashMap;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -25,28 +25,28 @@ import retrofit2.http.Url;
 public interface RestService {
 
     @GET
-    Call<String> get(@Url String url, @QueryMap Map<String, Object> params);
+    Call<String> get(@Url String url, @QueryMap WeakHashMap<String, Object> params);
 
     @POST
     @FormUrlEncoded
-    Call<String> post(@Url String url, @FieldMap Map<String, Object> params);
+    Call<String> post(@Url String url, @FieldMap WeakHashMap<String, Object> params);
 
     @POST
     Call<String> postRaw(@Url String url, @Body RequestBody body);
 
     @PUT
     @FormUrlEncoded
-    Call<String> put(@Url String url, @FieldMap Map<String, Object> params);
+    Call<String> put(@Url String url, @FieldMap WeakHashMap<String, Object> params);
 
     @PUT
     Call<String> putRaw(@Url String url, @Body RequestBody body);
 
     @DELETE
-    Call<String> delete(@Url String url, @QueryMap Map<String, Object> params);
+    Call<String> delete(@Url String url, @QueryMap WeakHashMap<String, Object> params);
 
     @GET
     @Streaming
-    Call<ResponseBody> download(@Url String url, @QueryMap Map<String, Object> params);
+    Call<ResponseBody> download(@Url String url, @QueryMap WeakHashMap<String, Object> params);
 
     @POST
     @FormUrlEncoded

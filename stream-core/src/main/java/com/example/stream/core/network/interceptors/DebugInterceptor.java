@@ -4,10 +4,8 @@ import android.support.annotation.RawRes;
 
 import com.example.stream.core.util.file.FileUtil;
 
-import java.io.File;
 import java.io.IOException;
 
-import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.Protocol;
 import okhttp3.Response;
