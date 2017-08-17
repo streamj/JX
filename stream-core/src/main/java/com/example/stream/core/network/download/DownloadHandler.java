@@ -9,6 +9,7 @@ import com.example.stream.core.network.callback.IRequest;
 import com.example.stream.core.network.callback.ISuccess;
 
 import java.util.Map;
+import java.util.WeakHashMap;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -21,7 +22,7 @@ import retrofit2.Response;
 
 public class DownloadHandler {
     private final String URL;
-    private final static Map<String, Object> PARAMS = RestCreator.getParams();
+    private final static WeakHashMap<String, Object> PARAMS = RestCreator.getParams();
     private final IRequest REQUEST;
     private final ISuccess SUCCESS;
     private final IError ERROR;

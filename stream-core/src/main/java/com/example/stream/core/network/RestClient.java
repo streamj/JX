@@ -13,6 +13,7 @@ import com.example.stream.core.ui.StreamLoader;
 
 import java.io.File;
 import java.util.Map;
+import java.util.WeakHashMap;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -27,7 +28,7 @@ import retrofit2.Callback;
 public class RestClient {
 
     private final String URL;
-    private final static Map<String, Object> PARAMS = RestCreator.getParams();
+    private final static WeakHashMap<String, Object> PARAMS = RestCreator.getParams();
     private final IRequest REQUEST;
     private final ISuccess SUCCESS;
     private final IError ERROR;
@@ -40,7 +41,7 @@ public class RestClient {
     private final String SAVED_FILE_NAME;
     private final Context CONTEXT;
 
-    public RestClient(String url, Map<String, Object> params, IRequest request,
+    public RestClient(String url, WeakHashMap<String, Object> params, IRequest request,
                       ISuccess success, IError error, IFailure failure,
                       RequestBody body, LoadStyle style, File file,
                       String downloadDir, String postfix, String savedFileName,
