@@ -24,11 +24,13 @@ public class LauncherScrollDelegate extends StreamDelegate implements OnItemClic
     private static final ArrayList<Integer> INTEGERS =  new ArrayList<>();
 
     private void initBanners(){
-        INTEGERS.add(R.mipmap.launcher_01);
-        INTEGERS.add(R.mipmap.launcher_02);
-        INTEGERS.add(R.mipmap.launcher_03);
-        INTEGERS.add(R.mipmap.launcher_04);
-        INTEGERS.add(R.mipmap.launcher_05);
+        if (INTEGERS.isEmpty()) {
+            INTEGERS.add(R.mipmap.launcher_01);
+            INTEGERS.add(R.mipmap.launcher_02);
+            INTEGERS.add(R.mipmap.launcher_03);
+            INTEGERS.add(R.mipmap.launcher_04);
+            INTEGERS.add(R.mipmap.launcher_05);
+        }
         mConvenientBanner
                 .setPages(new LauncherHolderCreator(), INTEGERS)
                 // 设定小圆点
