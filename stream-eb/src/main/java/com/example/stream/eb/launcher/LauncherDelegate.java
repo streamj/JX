@@ -6,6 +6,8 @@ import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 
 import com.example.stream.core.delegates.StreamDelegate;
+import com.example.stream.core.ui.launcher.ScrollLauncherTag;
+import com.example.stream.core.util.storage.Preference;
 import com.example.stream.core.util.timer.BaseTimerTask;
 import com.example.stream.core.util.timer.ITimerListener;
 import com.example.stream.eb.R;
@@ -32,7 +34,11 @@ public class LauncherDelegate extends StreamDelegate implements ITimerListener{
 
     @OnClick(R2.id.tv_launcher_timer)
     void OnClickTimer(){
-
+        if (mTimer != null) {
+            mTimer.cancel();
+            mTimer = null;
+            checkIfShowSrcoll();
+        }
     }
 
     private void initTimer(){
@@ -52,6 +58,16 @@ public class LauncherDelegate extends StreamDelegate implements ITimerListener{
         initTimer();
     }
 
+    private void checkIfShowSrcoll() {
+        // 如果不是第一次登录
+        if (!Preference.getAppFlag(ScrollLauncherTag.LAUNCH_FIRST_TIME.name())) {
+            start(new LauncherScrollDelegate(), SINGLETASK);
+        } else {
+            // todo 检查用户是否登录了 app
+        }
+    }
+
+
     @Override
     public void onTimer() {
         getProxyActivity().runOnUiThread(new Runnable() {
@@ -64,6 +80,7 @@ public class LauncherDelegate extends StreamDelegate implements ITimerListener{
                         if (mTimer != null) {
                             mTimer.cancel();
                             mTimer = null;
+                            checkIfShowSrcoll();
                         }
                     }
                 }

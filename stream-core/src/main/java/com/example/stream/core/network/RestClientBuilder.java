@@ -7,7 +7,7 @@ import com.example.stream.core.network.callback.IError;
 import com.example.stream.core.network.callback.IFailure;
 import com.example.stream.core.network.callback.IRequest;
 import com.example.stream.core.network.callback.ISuccess;
-import com.example.stream.core.ui.LoadStyle;
+import com.example.stream.core.ui.loader.LoadStyle;
 
 import java.io.File;
 import java.util.WeakHashMap;

@@ -1,4 +1,4 @@
-package com.example.stream.core.ui;
+package com.example.stream.core.ui.loader;
 
 import android.content.Context;
 

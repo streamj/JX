@@ -2,8 +2,8 @@ package com.example.stream.core.network.callback;
 
 import android.os.Handler;
 
-import com.example.stream.core.ui.LoadStyle;
-import com.example.stream.core.ui.StreamLoader;
+import com.example.stream.core.ui.loader.LoadStyle;
+import com.example.stream.core.ui.loader.StreamLoader;
 
 import retrofit2.Call;
 import retrofit2.Callback;

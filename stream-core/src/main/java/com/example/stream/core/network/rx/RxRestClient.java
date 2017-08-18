@@ -4,16 +4,10 @@ import android.content.Context;
 
 import com.example.stream.core.network.HttpMethod;
 import com.example.stream.core.network.RestCreator;
-import com.example.stream.core.network.callback.IError;
-import com.example.stream.core.network.callback.IFailure;
-import com.example.stream.core.network.callback.IRequest;
-import com.example.stream.core.network.callback.ISuccess;
-import com.example.stream.core.network.callback.RequestCallbacks;
-import com.example.stream.core.ui.LoadStyle;
-import com.example.stream.core.ui.StreamLoader;
+import com.example.stream.core.ui.loader.LoadStyle;
+import com.example.stream.core.ui.loader.StreamLoader;
 
 import java.io.File;
-import java.util.Map;
 import java.util.WeakHashMap;
 
 import io.reactivex.Observable;
@@ -21,7 +15,6 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
-import retrofit2.Callback;
 
 /**
  * Created by StReaM on 8/13/2017.

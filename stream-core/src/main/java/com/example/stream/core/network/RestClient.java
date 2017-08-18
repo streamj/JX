@@ -8,11 +8,10 @@ import com.example.stream.core.network.callback.IRequest;
 import com.example.stream.core.network.callback.ISuccess;
 import com.example.stream.core.network.callback.RequestCallbacks;
 import com.example.stream.core.network.download.DownloadHandler;
-import com.example.stream.core.ui.LoadStyle;
-import com.example.stream.core.ui.StreamLoader;
+import com.example.stream.core.ui.loader.LoadStyle;
+import com.example.stream.core.ui.loader.StreamLoader;
 
 import java.io.File;
-import java.util.Map;
 import java.util.WeakHashMap;
 
 import okhttp3.MediaType;
