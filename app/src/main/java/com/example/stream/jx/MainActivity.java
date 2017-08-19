@@ -8,6 +8,7 @@ import com.example.stream.core.activies.ProxyActivity;
 import com.example.stream.core.delegates.StreamDelegate;
 import com.example.stream.eb.launcher.LauncherDelegate;
 import com.example.stream.eb.launcher.LauncherScrollDelegate;
+import com.example.stream.eb.login.SignUpDelegate;
 
 
 public class MainActivity extends ProxyActivity {
@@ -23,6 +24,6 @@ public class MainActivity extends ProxyActivity {
 
     @Override
     public StreamDelegate setRootDelegate() {
-        return new LauncherDelegate();
+        return new SignUpDelegate();
     }
 }
