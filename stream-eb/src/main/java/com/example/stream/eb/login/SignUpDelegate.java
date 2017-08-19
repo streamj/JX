@@ -52,6 +52,11 @@ public class SignUpDelegate  extends StreamDelegate {
         }
     }
 
+    @OnClick(R2.id.tv_link_login)
+    void onClickLinkLoin(){
+        start(new LoginDelegate());
+    }
+
     private boolean checkForm() {
         final String userName = mUserName.getText().toString();
         final String email = mEmail.getText().toString();
@@ -82,7 +87,7 @@ public class SignUpDelegate  extends StreamDelegate {
             mPassword.setError("at least 6 bit password");
             pass = false;
         } else {
-            mPhone.setError(null);
+            mPassword.setError(null);
         }
         if (passwordRe.isEmpty() || passwordRe.length() < 6 || !passwordRe.equals(password)) {
             mPasswordRe.setError("password doesn't match");
