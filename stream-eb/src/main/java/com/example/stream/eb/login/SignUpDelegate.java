@@ -3,13 +3,17 @@ package com.example.stream.eb.login;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.stream.core.delegates.StreamDelegate;
 import com.example.stream.core.network.RestClient;
+import com.example.stream.core.network.callback.IError;
 import com.example.stream.core.network.callback.ISuccess;
+import com.example.stream.core.ui.loader.StreamLoader;
+import com.example.stream.core.util.log.StreamLogger;
 import com.example.stream.eb.R;
 import com.example.stream.eb.R2;
 
@@ -36,18 +40,29 @@ public class SignUpDelegate  extends StreamDelegate {
     @OnClick(R2.id.btn_sign_up)
     void onClickSignUp(){
         if (checkForm()) {
-//            RestClient.Builder()
-//                    .url("sign_up")
-//                    .params("", "")
-//                    .success(new ISuccess() {
-//                        @Override
-//                        public void onSuccess(String response) {
-//
-//                        }
-//                    })
-//                    .build()
-//                    .post();
-            Toast.makeText(getContext(), "Let's check it out",Toast.LENGTH_LONG).show();;
+            Log.v("debug", "get here");
+            RestClient.Builder()
+                    .url("http://freecloudfx.cc/api/user_profile.php")
+                    .params("name", mUserName.getText().toString())
+                    .params("email", mEmail.getText().toString())
+                    .params("phone", mPhone.getText().toString())
+                    .params("password", mPassword.getText().toString())
+                    .success(new ISuccess() {
+                        @Override
+                        public void onSuccess(String response) {
+//                            StreamLogger.json("USER_PROFILE", response);
+                            Log.v("USER_PROFILE", response);
+                            LoginHandler.onSignUp(response);
+                        }
+                    })
+                    .error(new IError() {
+                        @Override
+                        public void onError(int code, String msg) {
+
+                        }
+                    })
+                    .build()
+                    .post();
 
         }
     }
