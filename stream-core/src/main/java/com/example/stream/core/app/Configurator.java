@@ -1,5 +1,7 @@
 package com.example.stream.core.app;
 
+import android.app.Activity;
+
 import com.joanzapata.iconify.IconFontDescriptor;
 import com.joanzapata.iconify.Iconify;
 
@@ -19,7 +21,7 @@ public class Configurator {
     private static final ArrayList<Interceptor> INTERCEPTORS = new ArrayList<>();
 
     private Configurator(){
-        STREAM_CONFIGS.put(ConfigType.CONFIG_READY.name(), false);
+        STREAM_CONFIGS.put(ConfigKey.CONFIG_READY.name(), false);
     }
 
     public static Configurator getInstance(){
@@ -36,11 +38,11 @@ public class Configurator {
 
     public final void congfigure() {
         initIcons();
-        STREAM_CONFIGS.put(ConfigType.CONFIG_READY.name(), true);
+        STREAM_CONFIGS.put(ConfigKey.CONFIG_READY.name(), true);
     }
 
     public final Configurator withApiHost(String host) {
-        STREAM_CONFIGS.put(ConfigType.API_HOST.name(), host);
+        STREAM_CONFIGS.put(ConfigKey.API_HOST.name(), host);
         return this;
     }
 
@@ -53,6 +55,23 @@ public class Configurator {
         }
     }
 
+    public final Configurator withWeChatAppID(String appID) {
+        STREAM_CONFIGS.put(ConfigKey.WE_CHAT_APP_ID, appID);
+        return this;
+    }
+
+    public final Configurator withWeChatAppSecret(String appSecret) {
+        STREAM_CONFIGS.put(ConfigKey.WE_CHAT_APP_SECRET, appSecret);
+        return this;
+    }
+
+    public final Configurator withActivity(Activity activity) {
+        STREAM_CONFIGS.put(ConfigKey.ACTIVITY, activity);
+        return this;
+    }
+
+
+
     public final Configurator withIcon(IconFontDescriptor descriptor) {
         ICONS.add(descriptor);
         return this;
@@ -60,18 +79,18 @@ public class Configurator {
 
     public final Configurator withInterceptor(Interceptor interceptor) {
         INTERCEPTORS.add(interceptor);
-        STREAM_CONFIGS.put(ConfigType.INTERCEPTOR, INTERCEPTORS);
+        STREAM_CONFIGS.put(ConfigKey.INTERCEPTOR, INTERCEPTORS);
         return this;
     }
 
     public final Configurator withInterceptors(ArrayList<Interceptor> interceptors) {
         INTERCEPTORS.addAll(interceptors);
-        STREAM_CONFIGS.put(ConfigType.INTERCEPTOR, INTERCEPTORS);
+        STREAM_CONFIGS.put(ConfigKey.INTERCEPTOR, INTERCEPTORS);
         return this;
     }
 
     private void checkConfiguration() {
-        final boolean isReady = (boolean) STREAM_CONFIGS.get(ConfigType.CONFIG_READY.name());
+        final boolean isReady = (boolean) STREAM_CONFIGS.get(ConfigKey.CONFIG_READY.name());
         if(!isReady) {
             throw  new RuntimeException("Configuration was not completed, call configure");
         }

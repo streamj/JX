@@ -1,6 +1,6 @@
 package com.example.stream.core.network;
 
-import com.example.stream.core.app.ConfigType;
+import com.example.stream.core.app.ConfigKey;
 import com.example.stream.core.app.StreamCore;
 import com.example.stream.core.network.rx.RxRestService;
 
@@ -23,7 +23,7 @@ public class RestCreator {
     private static final class OKHttpHolder {
         private static final int TIME_OUT = 60;
         private static final OkHttpClient.Builder BUILDER = new OkHttpClient.Builder();
-        private static final ArrayList<Interceptor> INTERCEPTORS = StreamCore.getConfigurations(ConfigType.INTERCEPTOR);
+        private static final ArrayList<Interceptor> INTERCEPTORS = StreamCore.getConfigurations(ConfigKey.INTERCEPTOR);
 
         private static OkHttpClient.Builder addInterceptor(){
             if (INTERCEPTORS != null && !INTERCEPTORS.isEmpty()) {
@@ -41,7 +41,7 @@ public class RestCreator {
 
     private static final class RetrofitHolder {
         private static final String BASE_URL =
-                (String) StreamCore.getConfigurations(ConfigType.API_HOST.name());
+                (String) StreamCore.getConfigurations(ConfigKey.API_HOST.name());
 
         private static final Retrofit RETROFIT_CLIENT = new Retrofit.Builder()
                 .baseUrl(BASE_URL)

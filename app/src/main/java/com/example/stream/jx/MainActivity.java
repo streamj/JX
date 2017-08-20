@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBar;
 import android.widget.Toast;
 
 import com.example.stream.core.activies.ProxyActivity;
+import com.example.stream.core.app.StreamCore;
 import com.example.stream.core.delegates.StreamDelegate;
 import com.example.stream.core.ui.launcher.ILauncherListener;
 import com.example.stream.core.ui.launcher.OnLauncherFinishTag;
@@ -24,6 +25,7 @@ public class MainActivity extends ProxyActivity implements ILoginListener, ILaun
         if (actionBar != null) {
             actionBar.hide();
         }
+        StreamCore.getConfigurator().withActivity(this);
     }
 
     @Override

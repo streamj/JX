@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.SOURCE)
 public @interface AppRegisterGenerator {
-    String packagename();
+    String packageName();
 
     Class<?> registerTemplate();
 }

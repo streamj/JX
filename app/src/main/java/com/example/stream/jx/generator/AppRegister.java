@@ -9,7 +9,7 @@ import com.example.stream.core.wechat.template.AppRegisterTemplate;
  */
 
 @AppRegisterGenerator(
-        packagename = "com.example.stream.jx",
+        packageName = "com.example.stream.jx",
         registerTemplate = AppRegisterTemplate.class
 )
 public interface AppRegister {

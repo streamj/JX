@@ -11,7 +11,7 @@ public final class StreamCore {
     public static Configurator init(Context context) {
         Configurator.getInstance()
                 .getStreamConfigs()
-                .put(ConfigType.APPLICATION_CONTEXT, context.getApplicationContext());
+                .put(ConfigKey.APPLICATION_CONTEXT, context.getApplicationContext());
         return Configurator.getInstance();
     }
 
@@ -24,6 +24,6 @@ public final class StreamCore {
     }
 
     public static Context getApplicationContext() {
-        return getConfigurator().getConfiguration(ConfigType.APPLICATION_CONTEXT);
+        return getConfigurator().getConfiguration(ConfigKey.APPLICATION_CONTEXT);
     }
 }

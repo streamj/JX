@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.SOURCE)
 public @interface PayEntryGenerator {
-    String packagename();
+    String packageName();
 
     Class<?> payEntryTemplate();
 }

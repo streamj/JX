@@ -8,7 +8,7 @@ import com.example.stream.core.wechat.template.WXEntryTemplate;
  */
 
 @EntryGenerator(
-        packagename = "com.example.stream.jx",
+        packageName = "com.example.stream.jx",
         entryTemplate = WXEntryTemplate.class
 )
 public interface WeChatEntry {
