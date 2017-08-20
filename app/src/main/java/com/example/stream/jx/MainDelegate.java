@@ -23,7 +23,7 @@ public class MainDelegate extends StreamDelegate {
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
-            testRestClient();
+//            testRestClient();
     }
 
     private void testRestClient(){

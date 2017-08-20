@@ -1,13 +1,18 @@
 package com.example.stream.eb.launcher;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
+import com.example.stream.core.app.AccountManager;
+import com.example.stream.core.app.IUserChecker;
 import com.example.stream.core.delegates.StreamDelegate;
+import com.example.stream.core.ui.launcher.ILauncherListener;
 import com.example.stream.core.ui.launcher.LauncherHolderCreator;
+import com.example.stream.core.ui.launcher.OnLauncherFinishTag;
 import com.example.stream.core.ui.launcher.ScrollLauncherTag;
 import com.example.stream.core.util.storage.Preference;
 import com.example.stream.eb.R;
@@ -22,6 +27,8 @@ public class LauncherScrollDelegate extends StreamDelegate implements OnItemClic
 
     private ConvenientBanner<Integer> mConvenientBanner = null;
     private static final ArrayList<Integer> INTEGERS =  new ArrayList<>();
+
+    private ILauncherListener mILauncherListener = null;
 
     private void initBanners(){
         if (INTEGERS.isEmpty()) {
@@ -42,6 +49,14 @@ public class LauncherScrollDelegate extends StreamDelegate implements OnItemClic
     }
 
     @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof ILauncherListener) {
+            mILauncherListener = (ILauncherListener) activity;
+        }
+    }
+
+    @Override
     public Object setLayout() {
         mConvenientBanner = new ConvenientBanner<>(getContext());
         return mConvenientBanner;
@@ -57,7 +72,23 @@ public class LauncherScrollDelegate extends StreamDelegate implements OnItemClic
     public void onItemClick(int position) {
         if(position == INTEGERS.size() - 1) {
             Preference.setAppFlag(ScrollLauncherTag.LAUNCH_FIRST_TIME.name(), true);
-            // todo 检查用户是否已经登录
+            //  检查用户是否已经登录
+            // 检查用户是否登录了 app
+            AccountManager.checkAccount(new IUserChecker() {
+                @Override
+                public void onLoggedIn() {
+                    if (mILauncherListener != null) {
+                        mILauncherListener.onLaunchFinish(OnLauncherFinishTag.LOGGED_IN);
+                    }
+                }
+
+                @Override
+                public void onLoggedOut() {
+                    if (mILauncherListener != null) {
+                        mILauncherListener.onLaunchFinish(OnLauncherFinishTag.LOGGED_OUT);
+                    }
+                }
+            });
         }
     }
 }
