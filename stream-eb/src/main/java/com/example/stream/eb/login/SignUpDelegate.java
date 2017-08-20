@@ -1,5 +1,6 @@
 package com.example.stream.eb.login;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
@@ -37,6 +38,16 @@ public class SignUpDelegate  extends StreamDelegate {
     @BindView(R2.id.edit_sign_password_re)
     TextInputEditText mPasswordRe = null;
 
+    private ILoginListener mILoginListener = null;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof ILoginListener) {
+            mILoginListener = (ILoginListener) activity;
+        }
+    }
+
     @OnClick(R2.id.btn_sign_up)
     void onClickSignUp(){
         if (checkForm()) {
@@ -52,7 +63,7 @@ public class SignUpDelegate  extends StreamDelegate {
                         public void onSuccess(String response) {
 //                            StreamLogger.json("USER_PROFILE", response);
                             Log.v("USER_PROFILE", response);
-                            LoginHandler.onSignUp(response);
+                            LoginHandler.onSignUp(response, mILoginListener);
                         }
                     })
                     .error(new IError() {
