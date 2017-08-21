@@ -8,23 +8,23 @@ import java.util.LinkedHashMap;
 
 public final class ItemBuilder {
 
-    private final LinkedHashMap<BottomTabBean, BottomItemDelegate> ITEMS = new LinkedHashMap<>();
+    private final LinkedHashMap<BottomTabBean, BottomPageDelegate> ITEMS = new LinkedHashMap<>();
 
     static ItemBuilder Builder() {
         return new ItemBuilder();
     }
 
-    public final ItemBuilder addItems(BottomTabBean bean, BottomItemDelegate delegate) {
+    public final ItemBuilder addItems(BottomTabBean bean, BottomPageDelegate delegate) {
         ITEMS.put(bean, delegate);
         return this;
     }
 
-    public final ItemBuilder addItems(LinkedHashMap<BottomTabBean, BottomItemDelegate> items) {
+    public final ItemBuilder addItems(LinkedHashMap<BottomTabBean, BottomPageDelegate> items) {
         ITEMS.putAll(items);
         return this;
     }
 
-    public final LinkedHashMap<BottomTabBean, BottomItemDelegate> build() {
+    public final LinkedHashMap<BottomTabBean, BottomPageDelegate> build() {
         return ITEMS;
     }
 }

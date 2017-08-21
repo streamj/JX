@@ -25,12 +25,12 @@ import me.yokeyword.fragmentation.SupportFragment;
 /**
  * Created by StReaM on 8/21/2017.
  */
-
+// todo refactor a good name
 public abstract class BaseBottomDelegate extends StreamDelegate implements View.OnClickListener {
 
-    private final ArrayList<BottomItemDelegate> ITEM_DELEGATES = new ArrayList<>();
+    private final ArrayList<BottomPageDelegate> PAGE_DELEGATES = new ArrayList<>();
     private final ArrayList<BottomTabBean> TAB_BEANS = new ArrayList<>();
-    private final LinkedHashMap<BottomTabBean, BottomItemDelegate> ITEMS = new LinkedHashMap<>();
+    private final LinkedHashMap<BottomTabBean, BottomPageDelegate> ITEMS = new LinkedHashMap<>();
     private int mCurrentDelegate = 0;
     private int mIndexDelegate = 0;
     private int mClickedColor = Color.RED;
@@ -38,7 +38,7 @@ public abstract class BaseBottomDelegate extends StreamDelegate implements View.
     @BindView(R2.id.bottom_bar)
     LinearLayoutCompat mBottomBar;
 
-    public abstract LinkedHashMap<BottomTabBean, BottomItemDelegate> setItems(ItemBuilder builder);
+    public abstract LinkedHashMap<BottomTabBean, BottomPageDelegate> setItems(ItemBuilder builder);
 
     public abstract int setIndexDelegate();
 
@@ -54,14 +54,14 @@ public abstract class BaseBottomDelegate extends StreamDelegate implements View.
         }
 
         final ItemBuilder builder = ItemBuilder.Builder();
-        final LinkedHashMap<BottomTabBean, BottomItemDelegate> items = setItems(builder);
+        final LinkedHashMap<BottomTabBean, BottomPageDelegate> items = setItems(builder);
         ITEMS.putAll(items);
 
-        for (Map.Entry<BottomTabBean, BottomItemDelegate> item : ITEMS.entrySet()) {
+        for (Map.Entry<BottomTabBean, BottomPageDelegate> item : ITEMS.entrySet()) {
             final BottomTabBean key = item.getKey();
-            final BottomItemDelegate value = item.getValue();
+            final BottomPageDelegate value = item.getValue();
             TAB_BEANS.add(key);
-            ITEM_DELEGATES.add(value);
+            PAGE_DELEGATES.add(value);
         }
     }
 
@@ -89,7 +89,7 @@ public abstract class BaseBottomDelegate extends StreamDelegate implements View.
             }
         }
 
-        final SupportFragment[] delegateArray = ITEM_DELEGATES.toArray(new SupportFragment[size]);
+        final SupportFragment[] delegateArray = PAGE_DELEGATES.toArray(new SupportFragment[size]);
         loadMultipleRootFragment(R.id.bottom_bar_delegate_container, mIndexDelegate, delegateArray);
     }
 
@@ -113,7 +113,7 @@ public abstract class BaseBottomDelegate extends StreamDelegate implements View.
         final AppCompatTextView textView = (AppCompatTextView) item.getChildAt(1);
         iconTextView.setTextColor(mClickedColor);
         textView.setTextColor(mClickedColor);
-        showHideFragment(ITEM_DELEGATES.get(tag), ITEM_DELEGATES.get(mCurrentDelegate));
+        showHideFragment(PAGE_DELEGATES.get(tag), PAGE_DELEGATES.get(mCurrentDelegate));
         // must keep order
         mCurrentDelegate = tag;
     }

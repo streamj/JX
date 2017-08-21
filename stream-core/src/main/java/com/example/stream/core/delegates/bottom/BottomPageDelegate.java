@@ -11,7 +11,7 @@ import com.example.stream.core.delegates.StreamDelegate;
  * Created by StReaM on 8/21/2017.
  */
 
-public abstract class BottomItemDelegate extends StreamDelegate implements View.OnKeyListener{
+public abstract class BottomPageDelegate extends StreamDelegate implements View.OnKeyListener{
 
     private long mExitTime = 0;
     private static final int EXIT_TIME = 2000;
@@ -31,8 +31,7 @@ public abstract class BottomItemDelegate extends StreamDelegate implements View.
     public boolean onKey(View view, int i, KeyEvent keyEvent) {
         if (i == KeyEvent.KEYCODE_BACK && keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
             if (System.currentTimeMillis() - mExitTime > mExitTime) {
-                Toast.makeText(getContext(), "双击退出" + getString(R.string.app_name),
-                        Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "双击退出" + getString(R.string.app_name), Toast.LENGTH_LONG).show();
                 mExitTime = System.currentTimeMillis();
             } else {
                 _mActivity.finish();
