@@ -22,6 +22,8 @@ public class MyApplication extends Application {
                 .withIcon(new FontAwesomeModule())
                 .withIcon(new FontEbModule())
 //                .withInterceptor(new DebugInterceptor("index", R.raw.mock))
+                .withWeChatAppID("")
+                .withWeChatAppSecret("")
                 .congfigure();
         initStetho();
         DatabaseManager.getInstance().init(this);

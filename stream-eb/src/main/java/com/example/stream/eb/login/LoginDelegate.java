@@ -13,6 +13,8 @@ import com.example.stream.core.delegates.StreamDelegate;
 import com.example.stream.core.network.RestClient;
 import com.example.stream.core.network.callback.IError;
 import com.example.stream.core.network.callback.ISuccess;
+import com.example.stream.core.wechat.StreamWeChat;
+import com.example.stream.core.wechat.callback.IWeChatLoginCallback;
 import com.example.stream.eb.R;
 import com.example.stream.eb.R2;
 
@@ -68,7 +70,14 @@ public class LoginDelegate extends StreamDelegate {
 
     @OnClick(R2.id.icon_login_with_wechat)
     void onClickWeChat() {
+        StreamWeChat
+                .getInstance()
+                .onLoginSuccess(new IWeChatLoginCallback() {
+            @Override
+            public void onLoginSuccess(String userInfo) {
 
+            }
+        }).Login();
     }
 
     @OnClick(R2.id.tv_link_sign_up)

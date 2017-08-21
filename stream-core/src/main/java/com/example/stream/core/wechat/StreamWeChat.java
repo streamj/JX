@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import com.example.stream.core.app.ConfigKey;
 import com.example.stream.core.app.StreamCore;
+import com.example.stream.core.wechat.callback.IWeChatLoginCallback;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -19,8 +20,19 @@ public class StreamWeChat {
     private final String WE_CHAT_SPEC_SCOPE = "snsapi_userinfo";
     private final String WE_CHAT_SPEC_STATE = "random_state";
 
+    private IWeChatLoginCallback mIWeChatLoginCallback = null;
+
     private static final class Holder {
         private static final StreamWeChat INSTANCE = new StreamWeChat();
+    }
+
+    public IWeChatLoginCallback getIWeChatLoginCallback() {
+        return mIWeChatLoginCallback;
+    }
+
+    public StreamWeChat onLoginSuccess(IWeChatLoginCallback iWeChatLoginCallback){
+        mIWeChatLoginCallback = iWeChatLoginCallback;
+        return this;
     }
 
     public static StreamWeChat getInstance() {
