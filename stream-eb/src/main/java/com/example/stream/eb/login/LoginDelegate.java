@@ -7,7 +7,6 @@ import android.support.design.widget.TextInputEditText;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.stream.core.delegates.StreamDelegate;
 import com.example.stream.core.network.RestClient;
@@ -72,7 +71,7 @@ public class LoginDelegate extends StreamDelegate {
     void onClickWeChat() {
         StreamWeChat
                 .getInstance()
-                .onLoginSuccess(new IWeChatLoginCallback() {
+                .onLoginFinish(new IWeChatLoginCallback() {
             @Override
             public void onLoginSuccess(String userInfo) {
 

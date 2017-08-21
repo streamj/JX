@@ -30,7 +30,7 @@ public class StreamWeChat {
         return mIWeChatLoginCallback;
     }
 
-    public StreamWeChat onLoginSuccess(IWeChatLoginCallback iWeChatLoginCallback){
+    public StreamWeChat onLoginFinish(IWeChatLoginCallback iWeChatLoginCallback){
         mIWeChatLoginCallback = iWeChatLoginCallback;
         return this;
     }
