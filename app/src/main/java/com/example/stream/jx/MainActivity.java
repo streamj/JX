@@ -11,9 +11,9 @@ import com.example.stream.core.delegates.StreamDelegate;
 import com.example.stream.core.ui.launcher.ILauncherListener;
 import com.example.stream.core.ui.launcher.OnLauncherFinishTag;
 import com.example.stream.eb.launcher.LauncherDelegate;
-import com.example.stream.eb.launcher.LauncherScrollDelegate;
 import com.example.stream.eb.login.ILoginListener;
 import com.example.stream.eb.login.SignUpDelegate;
+import com.example.stream.eb.main.EbBottomDelegate;
 
 
 public class MainActivity extends ProxyActivity implements ILoginListener, ILauncherListener{
@@ -41,6 +41,7 @@ public class MainActivity extends ProxyActivity implements ILoginListener, ILaun
     @Override
     public void onLoginSuccess() {
         Toast.makeText(this, "Log in success!", Toast.LENGTH_LONG).show();
+        startWithPop(new EbBottomDelegate());
     }
 
     @Override
@@ -48,7 +49,7 @@ public class MainActivity extends ProxyActivity implements ILoginListener, ILaun
         switch (tag) {
             case LOGGED_IN:
                 Toast.makeText(this, "You are official user", Toast.LENGTH_LONG).show();
-                startWithPop(new MainDelegate());
+                startWithPop(new EbBottomDelegate());
                 break;
             case LOGGED_OUT:
                 Toast.makeText(this, "You are tourist", Toast.LENGTH_LONG).show();

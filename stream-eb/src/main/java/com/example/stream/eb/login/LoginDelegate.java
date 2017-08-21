@@ -44,7 +44,7 @@ public class LoginDelegate extends StreamDelegate {
     void onClickLogin() {
         if (checkForm()) {
             RestClient.Builder()
-                    .url("http://freecloudfx.cc/api/user_profile.php")
+                    .url("http://115.159.35.152/api/user_profile.php")
                     .params("email", mEmail.getText().toString())
                     .params("password", mPassword.getText().toString())
                     .success(new ISuccess() {
