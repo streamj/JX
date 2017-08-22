@@ -1,6 +1,7 @@
 package com.example.stream.core.app;
 
 import android.content.Context;
+import android.os.Handler;
 
 
 /**
@@ -25,5 +26,9 @@ public final class StreamCore {
 
     public static Context getApplicationContext() {
         return getConfigurator().getConfiguration(ConfigKey.APPLICATION_CONTEXT);
+    }
+
+    public static Handler getHandler() {
+        return getConfigurator().getConfiguration(ConfigKey.HANDLER);
     }
 }
