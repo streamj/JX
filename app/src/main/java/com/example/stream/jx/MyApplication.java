@@ -18,7 +18,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         StreamCore.init(this)
-                .withApiHost("http://127.0.0.1")
+                .withApiHost("http://115.159.35.152/api/")
                 .withIcon(new FontAwesomeModule())
                 .withIcon(new FontEbModule())
 //                .withInterceptor(new DebugInterceptor("index", R.raw.mock))

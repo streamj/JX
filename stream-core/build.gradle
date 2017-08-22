@@ -51,11 +51,13 @@ dependencies {
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     compile 'com.bigkoo:convenientbanner:2.0.5'
     compile 'com.ToxicBakery.viewpager.transforms:view-pager-transforms:1.2.32@aar'
-    compile 'com.alibaba:fastjson:1.2.37'
+    compile 'com.alibaba:fastjson:1.1.62.android'
     compile 'com.orhanobut:logger:2.1.1'
     // 引入库
     compile 'org.greenrobot:greendao:3.2.2'
     compile 'org.greenrobot:greendao-generator:3.2.2'
 
-    compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
+    compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:1.4.0'
+
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.22'
 }

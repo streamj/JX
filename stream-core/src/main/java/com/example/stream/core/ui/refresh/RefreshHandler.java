@@ -1,8 +1,11 @@
 package com.example.stream.core.ui.refresh;
 
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.widget.Toast;
 
 import com.example.stream.core.app.StreamCore;
+import com.example.stream.core.network.RestClient;
+import com.example.stream.core.network.callback.ISuccess;
 
 /**
  * Created by StReaM on 8/22/2017.
@@ -27,6 +30,20 @@ public class RefreshHandler implements SwipeRefreshLayout.OnRefreshListener {
                 SW_REFRESH.setRefreshing(false);
             }
         },2000);
+    }
+
+    public void firstPage(String url) {
+        RestClient.Builder()
+                .url(url)
+                .success(new ISuccess() {
+                    @Override
+                    public void onSuccess(String response) {
+//                        Toast.makeText(StreamCore.getApplicationContext(),
+//                                response, Toast.LENGTH_LONG).show();
+                    }
+                })
+                .build()
+                .get();
     }
 
     @Override

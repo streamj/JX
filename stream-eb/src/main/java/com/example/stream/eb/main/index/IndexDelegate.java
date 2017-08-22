@@ -7,12 +7,20 @@ import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Toast;
 
+import com.example.stream.core.app.StreamCore;
 import com.example.stream.core.delegates.bottom.BottomPageDelegate;
+import com.example.stream.core.network.RestClient;
+import com.example.stream.core.network.callback.ISuccess;
+import com.example.stream.core.ui.recycler.ComplexFields;
+import com.example.stream.core.ui.recycler.ComplexItemEntity;
 import com.example.stream.core.ui.refresh.RefreshHandler;
 import com.example.stream.eb.R;
 import com.example.stream.eb.R2;
 import com.joanzapata.iconify.widget.IconTextView;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 
@@ -46,6 +54,22 @@ public class IndexDelegate extends BottomPageDelegate {
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
         mRefreshHandler = new RefreshHandler(mSwipeRefreshLayout);
+        RestClient.Builder()
+                .url("index.php")
+                .success(new ISuccess() {
+                    @Override
+                    public void onSuccess(String response) {
+                        final IndexDataConverter converter = new IndexDataConverter();
+                        converter.setJsonData(response);
+                        final ArrayList<ComplexItemEntity> list =  converter.convert();
+                        final String imgUrl = list.get(1).getField(ComplexFields.IMAGE_URL);
+                        Toast.makeText(StreamCore.getApplicationContext(),
+                                imgUrl, Toast.LENGTH_LONG).show();
+                    }
+                })
+
+                .build()
+                .get();
     }
 
     @Override
@@ -53,6 +77,7 @@ public class IndexDelegate extends BottomPageDelegate {
         super.onLazyInitView(savedInstanceState);
         // put here is best
         initSwipeRefreshLayout();
+        mRefreshHandler.firstPage("index.php");
     }
 
     private void initSwipeRefreshLayout() {
