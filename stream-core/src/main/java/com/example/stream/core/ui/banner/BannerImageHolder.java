@@ -13,7 +13,7 @@ import com.bumptech.glide.request.RequestOptions;
  * Created by StReaM on 8/24/2017.
  */
 
-public class ImageHolder implements Holder<String> {
+public class BannerImageHolder implements Holder<String> {
 
     private AppCompatImageView mImageView = null;
     private RequestOptions mOptions = new RequestOptions();
@@ -33,6 +33,5 @@ public class ImageHolder implements Holder<String> {
                 .load(data)
                 .apply(mOptions)
                 .into(mImageView);
-
     }
 }

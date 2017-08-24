@@ -35,6 +35,7 @@ public class ComplexRecyclerAdapter
     }
 
     private void init() {
+        // 父类方法
         addItemType(ItemType.TEXT, R.layout.item_complex_text);
         addItemType(ItemType.IMAGE, R.layout.item_complex_image);
         addItemType(ItemType.IMAGE_TEXT, R.layout.item_complex_image_text);
@@ -63,7 +64,7 @@ public class ComplexRecyclerAdapter
     protected void convert(ComplexViewHolder helper, ComplexItemEntity item) {
         final String text;
         final String imageUrl;
-        final ArrayList<String> bannerImags;
+        final ArrayList<String> bannerImages;
         switch (helper.getItemViewType()) {
             case ItemType.TEXT:
                 text = item.getField(ComplexFields.TEXT);
@@ -78,9 +79,9 @@ public class ComplexRecyclerAdapter
                 break;
             case ItemType.BANNER:
                 if (mIsBannerInitialized) {
-                    bannerImags = item.getField(ComplexFields.BANNERS);
+                    bannerImages = item.getField(ComplexFields.BANNERS);
                     final ConvenientBanner<String> convenientBanner = helper.getView(R.id.rv_banner);
-                    BannerCreator.setDefault(convenientBanner, bannerImags, this);
+                    BannerCreator.setDefault(convenientBanner, bannerImages, this);
                     mIsBannerInitialized = true;
                 }
                 break;

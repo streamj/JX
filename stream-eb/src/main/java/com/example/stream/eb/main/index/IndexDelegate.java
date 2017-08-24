@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -53,23 +54,8 @@ public class IndexDelegate extends BottomPageDelegate {
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
-        mRefreshHandler = new RefreshHandler(mSwipeRefreshLayout);
-        RestClient.Builder()
-                .url("index.php")
-                .success(new ISuccess() {
-                    @Override
-                    public void onSuccess(String response) {
-                        final IndexDataConverter converter = new IndexDataConverter();
-                        converter.setJsonData(response);
-                        final ArrayList<ComplexItemEntity> list =  converter.convert();
-                        final String imgUrl = list.get(1).getField(ComplexFields.IMAGE_URL);
-                        Toast.makeText(StreamCore.getApplicationContext(),
-                                imgUrl, Toast.LENGTH_LONG).show();
-                    }
-                })
+        mRefreshHandler = RefreshHandler.create(mSwipeRefreshLayout, mRecyclerView, new IndexDataConverter());
 
-                .build()
-                .get();
     }
 
     @Override
@@ -77,7 +63,13 @@ public class IndexDelegate extends BottomPageDelegate {
         super.onLazyInitView(savedInstanceState);
         // put here is best
         initSwipeRefreshLayout();
+        initRecyclerView();
         mRefreshHandler.firstPage("index.php");
+    }
+
+    private void initRecyclerView(){
+        final GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 4);
+        mRecyclerView.setLayoutManager(gridLayoutManager);
     }
 
     private void initSwipeRefreshLayout() {

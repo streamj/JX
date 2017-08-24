@@ -1,23 +1,42 @@
 package com.example.stream.core.ui.refresh;
 
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.widget.Toast;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.stream.core.app.StreamCore;
 import com.example.stream.core.network.RestClient;
 import com.example.stream.core.network.callback.ISuccess;
+import com.example.stream.core.ui.recycler.ComplexRecyclerAdapter;
+import com.example.stream.core.ui.recycler.DataConverter;
 
 /**
  * Created by StReaM on 8/22/2017.
  */
 
-public class RefreshHandler implements SwipeRefreshLayout.OnRefreshListener {
+public class RefreshHandler implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
 
     private final SwipeRefreshLayout SW_REFRESH;
+    private final PagingBean BEAN;
+    private final RecyclerView RECYCLER_VIEW;
+    private final DataConverter CONVERTER;
+    private ComplexRecyclerAdapter mAdapter = null;
 
-    public RefreshHandler(SwipeRefreshLayout srl) {
+    private RefreshHandler(SwipeRefreshLayout srl, RecyclerView recyclerView,
+                          DataConverter converter, PagingBean bean) {
         this.SW_REFRESH = srl;
+        this.RECYCLER_VIEW = recyclerView;
+        this.CONVERTER = converter;
+        this.BEAN = bean;
         SW_REFRESH.setOnRefreshListener(this);
+    }
+
+    public static RefreshHandler create(SwipeRefreshLayout srl,  RecyclerView rv,
+        DataConverter convert) {
+        return new RefreshHandler(srl, rv, convert, new PagingBean());
     }
 
     private void refresh() {
@@ -33,13 +52,21 @@ public class RefreshHandler implements SwipeRefreshLayout.OnRefreshListener {
     }
 
     public void firstPage(String url) {
+        BEAN.setLoadDelay(1000);
         RestClient.Builder()
                 .url(url)
                 .success(new ISuccess() {
                     @Override
                     public void onSuccess(String response) {
-//                        Toast.makeText(StreamCore.getApplicationContext(),
-//                                response, Toast.LENGTH_LONG).show();
+                        // get the total item count and item count per page for paging
+                        final JSONObject jsonObject = JSON.parseObject(response);
+                        BEAN.setTotalItemCount(jsonObject.getInteger("total"))
+                                .setItemCountPerPage(jsonObject.getInteger("page_size"));
+                        // pass response directly to the adapter
+                        mAdapter = ComplexRecyclerAdapter.create(CONVERTER.setJsonData(response));
+                        mAdapter.setOnLoadMoreListener(RefreshHandler.this, RECYCLER_VIEW);
+                        RECYCLER_VIEW.setAdapter(mAdapter);
+                        BEAN.addIndex();
                     }
                 })
                 .build()
@@ -49,5 +76,10 @@ public class RefreshHandler implements SwipeRefreshLayout.OnRefreshListener {
     @Override
     public void onRefresh() {
         refresh();
+    }
+
+    @Override
+    public void onLoadMoreRequested() {
+
     }
 }

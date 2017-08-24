@@ -16,7 +16,7 @@ public class BannerCreator {
     public static void setDefault(ConvenientBanner<String> convenientBanner,
                                   ArrayList<String> banners,
                                   OnItemClickListener listener) {
-        convenientBanner.setPages(new HolderCreator(), banners)
+        convenientBanner.setPages(new BannerImageHolderCreator(), banners)
                 .setPageIndicator(new int[]{R.drawable.dot_normal, R.drawable.dot_focus})
                 .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL)
                 .setOnItemClickListener(listener)
