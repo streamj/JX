@@ -5,7 +5,6 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.stream.core.ui.recycler.ComplexFields;
 import com.example.stream.core.ui.recycler.ComplexItemEntity;
-import com.example.stream.core.ui.recycler.ComplexItemEntityBuilder;
 import com.example.stream.core.ui.recycler.DataConverter;
 import com.example.stream.core.ui.recycler.ItemType;
 
@@ -35,7 +34,7 @@ public class IndexDataConverter extends DataConverter {
             } else if (imageUrl != null && text == null) {
                 type = ItemType.IMAGE;
             } else if (imageUrl != null) {
-                type = ItemType.TEXT_IMAGE;
+                type = ItemType.IMAGE_TEXT;
             } else if (banners != null) {
                 type = ItemType.BANNER;
                 final int bannerSize = banners.size();
@@ -44,7 +43,6 @@ public class IndexDataConverter extends DataConverter {
                     bannerImages.add(banner);
                 }
             }
-
             final ComplexItemEntity entity = ComplexItemEntity.Builder()
                     .setField(ComplexFields.ITEM_TYPE, type)
                     .setField(ComplexFields.SPAN_SIZE, spanSize)

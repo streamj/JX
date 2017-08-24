@@ -12,10 +12,13 @@ import java.util.LinkedHashMap;
  */
 
 public class ComplexItemEntity implements MultiItemEntity {
+
     private final ReferenceQueue<LinkedHashMap<Object, Object>> ITEM_QUEUE = new ReferenceQueue<>();
+
+    // 用于保存 ItemType 和 具体值的 Map
     private final LinkedHashMap<Object, Object> MULTIPLE_FIELDS = new LinkedHashMap<>();
-    private final SoftReference<LinkedHashMap<Object, Object>> FIELDS_REF =
-            new SoftReference<>(MULTIPLE_FIELDS, ITEM_QUEUE);
+
+    private final SoftReference<LinkedHashMap<Object, Object>> FIELDS_REF = new SoftReference<>(MULTIPLE_FIELDS, ITEM_QUEUE);
 
     public ComplexItemEntity(LinkedHashMap<?,?> fields) {
         FIELDS_REF.get().putAll(fields);
@@ -30,6 +33,7 @@ public class ComplexItemEntity implements MultiItemEntity {
         return (int)FIELDS_REF.get().get(ComplexFields.ITEM_TYPE);
     }
 
+    @SuppressWarnings("unchecked")
     public final <T> T getField(Object key) {
         return (T) FIELDS_REF.get().get(key);
     }
