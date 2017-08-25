@@ -15,6 +15,8 @@ import com.example.stream.eb.login.ILoginListener;
 import com.example.stream.eb.login.SignUpDelegate;
 import com.example.stream.eb.main.EbBottomDelegate;
 
+import qiu.niorgai.StatusBarCompat;
+
 
 public class MainActivity extends ProxyActivity implements ILoginListener, ILauncherListener{
 
@@ -26,6 +28,8 @@ public class MainActivity extends ProxyActivity implements ILoginListener, ILaun
             actionBar.hide();
         }
         StreamCore.getConfigurator().withActivity(this);
+        // 沉浸式状态栏
+        StatusBarCompat.translucentStatusBar(this, true);
     }
 
     @Override

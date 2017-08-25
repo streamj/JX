@@ -3,15 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_index"
+        android:id="@+id/index_swipe"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_index"
+            android:id="@+id/index_rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
@@ -20,6 +21,7 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/index_toolbar"
         android:background="@android:color/transparent"
+        app:layout_behavior="com.example.stream.eb.main.index.TranslucentBehavior"
         android:layout_width="match_parent"
         android:layout_height="80dp">
 
@@ -32,7 +34,7 @@
                 android:id="@+id/index_scan"
                 android:gravity="center"
                 android:paddingRight="10dp"
-                android:text="{icon-ali-scan}"
+                android:text="{icon-ali-pay}"
                 android:textSize="25sp"
                 android:textColor="@android:color/darker_gray"
                 android:layout_gravity="left"
