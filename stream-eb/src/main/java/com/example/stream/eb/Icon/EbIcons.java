@@ -24,6 +24,6 @@ public enum EbIcons implements Icon {
 
     @Override
     public char character() {
-        return 0;
+        return character;
     }
 }
