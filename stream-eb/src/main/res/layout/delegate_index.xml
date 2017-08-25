@@ -32,7 +32,7 @@
                 android:id="@+id/index_scan"
                 android:gravity="center"
                 android:paddingRight="10dp"
-                android:text="{icon-ali-pay}"
+                android:text="{icon-ali-scan}"
                 android:textSize="25sp"
                 android:textColor="@android:color/darker_gray"
                 android:layout_gravity="left"

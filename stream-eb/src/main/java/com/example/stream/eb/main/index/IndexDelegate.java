@@ -2,6 +2,7 @@ package com.example.stream.eb.main.index;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.GridLayoutManager;
@@ -14,6 +15,7 @@ import com.example.stream.core.app.StreamCore;
 import com.example.stream.core.delegates.bottom.BottomPageDelegate;
 import com.example.stream.core.network.RestClient;
 import com.example.stream.core.network.callback.ISuccess;
+import com.example.stream.core.ui.recycler.BaseDecoration;
 import com.example.stream.core.ui.recycler.ComplexFields;
 import com.example.stream.core.ui.recycler.ComplexItemEntity;
 import com.example.stream.core.ui.refresh.RefreshHandler;
@@ -70,6 +72,10 @@ public class IndexDelegate extends BottomPageDelegate {
     private void initRecyclerView(){
         final GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 4);
         mRecyclerView.setLayoutManager(gridLayoutManager);
+        mRecyclerView.addItemDecoration(
+                BaseDecoration
+                .create(ContextCompat.getColor(getContext(),R.color.app_background),5)
+        );
     }
 
     private void initSwipeRefreshLayout() {
