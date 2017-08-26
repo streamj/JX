@@ -22,7 +22,7 @@
     </android.support.v7.widget.Toolbar>
 
     <android.support.v7.widget.LinearLayoutCompat
-        android:background="@android:color/darker_gray"
+        android:background="@color/app_background"
         android:baselineAligned="true"
         android:orientation="horizontal"
         android:layout_width="match_parent"

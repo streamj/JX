@@ -24,11 +24,11 @@ public class SortDelegate extends BottomPageDelegate {
 
     }
 
-//    @Override
-//    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
-//        super.onLazyInitView(savedInstanceState);
-//        final VerticalListDelegate listDelegate = new VerticalListDelegate();
-//        loadRootFragment(R.id.sort_list_container, listDelegate);
-//        loadRootFragment(R.id.sort_content_container, ContentDelegate.newInstance(1));
-//    }
+    @Override
+    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
+        super.onLazyInitView(savedInstanceState);
+        final VerticalListDelegate listDelegate = new VerticalListDelegate();
+        loadRootFragment(R.id.sort_list_container, listDelegate);
+        loadRootFragment(R.id.sort_content_container, ContentDelegate.newInstance(1));
+    }
 }
