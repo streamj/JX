@@ -9,13 +9,14 @@ import android.view.View;
 
 import com.example.stream.core.ui.recycler.RgbValue;
 import com.example.stream.eb.R;
+import com.tencent.mm.opensdk.utils.Log;
 
 /**
  * Created by StReaM on 8/26/2017.
  */
 
 public class TranslucentBehavior extends CoordinatorLayout.Behavior<Toolbar> {
-    private int mDistanceToTop = 0;
+    private int mOffset_Y = 0;
     private static final int velocity = 3;
     private final RgbValue RGB_VALUE = RgbValue.create(51,181,229);
 
@@ -38,18 +39,28 @@ public class TranslucentBehavior extends CoordinatorLayout.Behavior<Toolbar> {
     @Override
     public void onNestedPreScroll(CoordinatorLayout coordinatorLayout, Toolbar child, View target, int dx, int dy, int[] consumed) {
         super.onNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed);
-        // 增加滑动距离
-        mDistanceToTop += dy;
-        final int targetHeight = child.getBottom();
 
-        if (mDistanceToTop > 0 && mDistanceToTop <= targetHeight) {
-            final float scale = (float) mDistanceToTop/targetHeight;
+        final int toolbarHeight = child.getBottom();
+
+        // 增加滑动距离
+        // dy 向上滑动为 +, 向下滑动为 -
+        mOffset_Y += dy;
+        Log.d("Nested", "the dy is " +dy  + "the offset is " + mOffset_Y + "toolbar height is " + toolbarHeight);
+
+        if (mOffset_Y > 0 && mOffset_Y <= toolbarHeight) {
+            final float scale = (float) mOffset_Y / toolbarHeight;
             final float alpha = scale * 255;
             child.setBackgroundColor(
                     Color.argb((int)alpha, RGB_VALUE.red(), RGB_VALUE.green(),RGB_VALUE.blue())
             );
-        } else if (mDistanceToTop > targetHeight) {
+        } else if (mOffset_Y > toolbarHeight) {
             child.setBackgroundColor(Color.rgb(RGB_VALUE.red(), RGB_VALUE.green(),RGB_VALUE.blue()));
+        } else if (mOffset_Y < 0) {
+            child.setBackgroundColor(
+                    Color.argb(0, RGB_VALUE.red(), RGB_VALUE.green(),RGB_VALUE.blue())
+            );
+            // when offset < 0, the view can't scroll, so do not decrease
+            mOffset_Y = 0;
         }
     }
 }
