@@ -16,7 +16,6 @@ import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
 public class ProductDetailDelegate extends StreamDelegate {
 
-
     public static ProductDetailDelegate create() {
         return new ProductDetailDelegate();
     }

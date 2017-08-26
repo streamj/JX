@@ -106,7 +106,7 @@ public abstract class BaseBottomDelegate extends StreamDelegate implements View.
 
     @Override
     public void onClick(View view) {
-        final int tag =(int) view.getTag();
+        final int tag = (int) view.getTag();
         resetColor();
         final RelativeLayout item = (RelativeLayout) view;
         final IconTextView iconTextView = (IconTextView) item.getChildAt(0);

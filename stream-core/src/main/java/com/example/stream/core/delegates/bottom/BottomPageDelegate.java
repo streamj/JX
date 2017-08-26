@@ -21,6 +21,7 @@ public abstract class BottomPageDelegate extends StreamDelegate implements View.
         super.onResume();
         final View rootView = getView();
         if (rootView != null) {
+            // ensure key listener
             rootView.setFocusableInTouchMode(true);
             rootView.requestFocus();
             rootView.setOnKeyListener(this);
