@@ -5,4 +5,9 @@ package com.example.stream.core.delegates;
  */
 
 public abstract class StreamDelegate extends PermissionCheckerDelegate {
+
+    @SuppressWarnings("unchecked")
+    public <T extends StreamDelegate> T getParentDelegate() {
+        return (T) getParentFragment();
+    }
 }

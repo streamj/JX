@@ -15,6 +15,7 @@ import com.example.stream.core.ui.recycler.BaseDecoration;
 import com.example.stream.core.ui.refresh.RefreshHandler;
 import com.example.stream.eb.R;
 import com.example.stream.eb.R2;
+import com.example.stream.eb.main.EbBottomDelegate;
 import com.joanzapata.iconify.widget.IconTextView;
 
 import butterknife.BindView;
@@ -59,6 +60,9 @@ public class IndexDelegate extends BottomPageDelegate {
         initSwipeRefreshLayout();
         initRecyclerView();
         mRefreshHandler.firstPage("index.php");
+
+        final EbBottomDelegate ebBottomDelegate = getParentDelegate();
+        mRecyclerView.addOnItemTouchListener(IndexItemClickListener.create(ebBottomDelegate));
     }
 
     private void initRecyclerView(){

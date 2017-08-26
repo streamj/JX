@@ -55,7 +55,7 @@ public class TranslucentBehavior extends CoordinatorLayout.Behavior<Toolbar> {
             );
         } else if (mOffset_Y > toolbarHeight) {
             child.setBackgroundColor(Color.rgb(RGB_VALUE.red(), RGB_VALUE.green(),RGB_VALUE.blue()));
-        } else if (mOffset_Y < 0) {
+        } else if (mOffset_Y <= 0) {
             child.setBackgroundColor(
                     Color.argb(0, RGB_VALUE.red(), RGB_VALUE.green(),RGB_VALUE.blue())
             );
