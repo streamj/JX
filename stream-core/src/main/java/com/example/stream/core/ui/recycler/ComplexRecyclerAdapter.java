@@ -25,7 +25,7 @@ public class ComplexRecyclerAdapter
         extends BaseMultiItemQuickAdapter<ComplexItemEntity, ComplexViewHolder>
         implements BaseQuickAdapter.SpanSizeLookup, OnItemClickListener{
 
-    private RequestOptions mOptions = new RequestOptions();
+    private static final RequestOptions OPTIONS = new RequestOptions();
 
     private boolean mIsBannerInitialized = false;
 
@@ -46,7 +46,7 @@ public class ComplexRecyclerAdapter
         // 多次执行动画
         isFirstOnly(false);
 
-        mOptions.dontAnimate()
+        OPTIONS.dontAnimate()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop();
 
@@ -74,7 +74,7 @@ public class ComplexRecyclerAdapter
                 imageUrl = item.getField(ComplexFields.IMAGE_URL);
                 Glide.with(mContext)
                         .load(imageUrl)
-                        .apply(mOptions)
+                        .apply(OPTIONS)
                         .into((ImageView) helper.getView(R.id.complex_img));
                 break;
             case ItemType.BANNER:
@@ -90,7 +90,7 @@ public class ComplexRecyclerAdapter
                 imageUrl = item.getField(ComplexFields.IMAGE_URL);
                 Glide.with(mContext)
                         .load(imageUrl)
-                        .apply(mOptions)
+                        .apply(OPTIONS)
                         .into((ImageView) helper.getView(R.id.complex_img_text_img));
                 helper.setText(R.id.complex_img_text_text, text);
                 break;

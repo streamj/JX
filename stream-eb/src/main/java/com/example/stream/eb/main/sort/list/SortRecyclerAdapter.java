@@ -4,6 +4,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 
+import com.example.stream.core.delegates.StreamDelegate;
 import com.example.stream.core.ui.recycler.ComplexFields;
 import com.example.stream.core.ui.recycler.ComplexItemEntity;
 import com.example.stream.core.ui.recycler.ComplexRecyclerAdapter;
@@ -11,6 +12,7 @@ import com.example.stream.core.ui.recycler.ComplexViewHolder;
 import com.example.stream.core.ui.recycler.ItemType;
 import com.example.stream.eb.R;
 import com.example.stream.eb.main.sort.SortDelegate;
+import com.example.stream.eb.main.sort.content.ContentDelegate;
 import com.tencent.mm.opensdk.utils.Log;
 
 import java.util.List;
@@ -41,7 +43,6 @@ public class SortRecyclerAdapter extends ComplexRecyclerAdapter {
                 final View line = helper.getView(R.id.view_line);
                 // get the whole view
                 final View itemView = helper.itemView;
-                Log.d("defuck", "the view is " + itemView.toString());
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -57,6 +58,7 @@ public class SortRecyclerAdapter extends ComplexRecyclerAdapter {
 
                             final int contentId = getData()
                                     .get(currentPosition).getField(ComplexFields.ID);
+                            showContent(contentId);
                         }
                     }
                 });
@@ -74,6 +76,18 @@ public class SortRecyclerAdapter extends ComplexRecyclerAdapter {
                 break;
             default:
                 break;
+        }
+    }
+
+    private void showContent(int contentId) {
+        final ContentDelegate contentDelegate = ContentDelegate.newInstance(contentId);
+        switchContent(contentDelegate);
+    }
+
+    private void switchContent(ContentDelegate contentDelegate) {
+        final StreamDelegate delegate= DELEGATE.findChildFragment(ContentDelegate.class);
+        if (delegate != null) {
+            delegate.replaceFragment(contentDelegate, false);
         }
     }
 }
