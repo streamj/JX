@@ -3,7 +3,7 @@ package com.example.stream.core.delegates.web.client;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.example.stream.core.delegates.web.WebDelegate;
+import com.example.stream.core.delegates.web.BaseWebDelegate;
 import com.example.stream.core.delegates.web.route.Router;
 import com.example.stream.core.util.log.StreamLogger;
 
@@ -12,9 +12,9 @@ import com.example.stream.core.util.log.StreamLogger;
  */
 
 public class WebViewClientImpl extends WebViewClient {
-    private final WebDelegate DELEGATE;
+    private final BaseWebDelegate DELEGATE;
 
-    public WebViewClientImpl(WebDelegate delegate) {
+    public WebViewClientImpl(BaseWebDelegate delegate) {
         this.DELEGATE = delegate;
     }
 

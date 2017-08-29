@@ -30,6 +30,7 @@ public class DiscoverDelegate extends BottomPageDelegate {
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
         final WebDelegateImpl delegate = WebDelegateImpl.create("test.html");
+        delegate.setTopDelegate(this.getParentDelegate());
         loadRootFragment(R.id.web_discover_container, delegate);
     }
 

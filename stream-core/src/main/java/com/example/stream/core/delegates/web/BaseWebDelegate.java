@@ -15,16 +15,17 @@ import java.lang.ref.WeakReference;
  * Created by StReaM on 8/28/2017.
  */
 
-public abstract class WebDelegate extends StreamDelegate implements IWebViewInitializer{
+public abstract class BaseWebDelegate extends StreamDelegate implements IWebViewInitializer{
 
     private WebView mWebView = null;
 
-    private final ReferenceQueue<WebView> WEBVIEW_QUEUE = new ReferenceQueue<>();
+    private final ReferenceQueue<WebView> WEB_VIEW_QUEUE = new ReferenceQueue<>();
 
     private String mUrl = null;
     private boolean mIsWebViewAvailable = false;
+    private StreamDelegate mTopDelegate = null;
 
-    public WebDelegate() {
+    public BaseWebDelegate() {
 
     }
 
@@ -47,13 +48,13 @@ public abstract class WebDelegate extends StreamDelegate implements IWebViewInit
             final IWebViewInitializer initializer = setInitializer();
             if (initializer != null) {
                 final WeakReference<WebView> webRef =
-                        new WeakReference<>(new WebView(getContext()), WEBVIEW_QUEUE);
+                        new WeakReference<>(new WebView(getContext()), WEB_VIEW_QUEUE);
                 mWebView = webRef.get();
                 mWebView = initializer.initWebView(mWebView);
                 mWebView.setWebViewClient(initializer.initWebViewClient());
                 mWebView.setWebChromeClient(initializer.initWebChromeClient());
                 // for interactive with native JS
-                mWebView.addJavascriptInterface(StreamWebInterface.create(this), "PolarBear");
+                mWebView.addJavascriptInterface(StreamWebInterface.create(this), "bear");
                 mIsWebViewAvailable = true;
             } else {
                 throw new NullPointerException("initializer is null");
@@ -73,6 +74,17 @@ public abstract class WebDelegate extends StreamDelegate implements IWebViewInit
             throw new NullPointerException("webView is null");
         }
         return mUrl;
+    }
+
+    public void setTopDelegate(StreamDelegate delegate){
+        mTopDelegate = delegate;
+    }
+
+    public StreamDelegate getTopDelegate() {
+        if (mTopDelegate != null) {
+            return mTopDelegate;
+        }
+        return this;
     }
 
 

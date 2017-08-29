@@ -8,7 +8,7 @@ import android.webkit.URLUtil;
 import android.webkit.WebView;
 
 import com.example.stream.core.delegates.StreamDelegate;
-import com.example.stream.core.delegates.web.WebDelegate;
+import com.example.stream.core.delegates.web.BaseWebDelegate;
 import com.example.stream.core.delegates.web.WebDelegateImpl;
 
 /**
@@ -29,19 +29,15 @@ public class Router {
         return Holder.INSTANCE;
     }
 
-    public final boolean handleWebUrl(WebDelegate delegate, String url) {
+    public final boolean handleWebUrl(BaseWebDelegate delegate, String url) {
         if (url.contains("tel:")) {
             callPhone(delegate.getContext(), url);
             return true;
         }
 
-        final StreamDelegate parentDelegate = delegate.getParentDelegate();
+        final StreamDelegate topDelegate = delegate.getTopDelegate();
         final WebDelegateImpl webDelegate = WebDelegateImpl.create(url);
-        if (parentDelegate == null) {
-            delegate.start(webDelegate);
-        } else {
-            parentDelegate.start(webDelegate);
-        }
+        topDelegate.start(webDelegate);
 
         return true;
     }
@@ -66,7 +62,7 @@ public class Router {
         }
     }
 
-    public void loadPage(WebDelegate delegate, String url) {
+    public void loadPage(BaseWebDelegate delegate, String url) {
         loadPage(delegate.getWebView(), url);
     }
 

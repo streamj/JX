@@ -17,7 +17,7 @@ import com.example.stream.core.delegates.web.route.Router;
  * Created by StReaM on 8/28/2017.
  */
 
-public class WebDelegateImpl extends WebDelegate {
+public class WebDelegateImpl extends BaseWebDelegate {
 
     public static WebDelegateImpl create(String url) {
         final Bundle args = new Bundle();

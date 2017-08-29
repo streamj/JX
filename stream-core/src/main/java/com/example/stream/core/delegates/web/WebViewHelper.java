@@ -11,7 +11,7 @@ import android.webkit.WebView;
 
 public class WebViewHelper {
 
-    @SuppressLint("NewApi")
+    @SuppressLint({"NewApi", "SetJavaScriptEnabled"})
     public WebView createWebView(WebView webView) {
         WebView.setWebContentsDebuggingEnabled(true);
         // disable horizontal scroll
@@ -29,6 +29,8 @@ public class WebViewHelper {
         });
 
         final WebSettings settings = webView.getSettings();
+        // enable javascript
+        settings.setJavaScriptEnabled(true); // careful
         final String userAgent = settings.getUserAgentString();
         settings.setUserAgentString(userAgent + "polar_bear");
         // hide zoom controls
