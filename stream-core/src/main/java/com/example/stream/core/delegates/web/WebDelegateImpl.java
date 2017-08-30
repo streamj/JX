@@ -7,6 +7,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.example.stream.core.delegates.IPageLoadListener;
 import com.example.stream.core.delegates.web.chrome.WebChromeClientImpl;
 import com.example.stream.core.delegates.web.client.WebViewClientImpl;
 import com.example.stream.core.delegates.web.route.RouteKeys;
@@ -18,6 +19,12 @@ import com.example.stream.core.delegates.web.route.Router;
  */
 
 public class WebDelegateImpl extends BaseWebDelegate {
+
+    private IPageLoadListener mIPageLoadListener = null;
+
+    public void setIPageLoadListener(IPageLoadListener IPageLoadListener) {
+        mIPageLoadListener = IPageLoadListener;
+    }
 
     public static WebDelegateImpl create(String url) {
         final Bundle args = new Bundle();
@@ -53,7 +60,7 @@ public class WebDelegateImpl extends BaseWebDelegate {
     @Override
     public WebViewClient initWebViewClient() {
         final WebViewClientImpl client = new WebViewClientImpl(this);
-
+        client.setIPageLoadListener(mIPageLoadListener);
         return client;
     }
 

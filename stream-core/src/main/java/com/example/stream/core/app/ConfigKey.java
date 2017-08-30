@@ -14,4 +14,6 @@ public enum ConfigKey {
     WE_CHAT_APP_SECRET,
     ACTIVITY,
     HANDLER,
+    JS_INTERFACE,
+    WEB_HOST,
 }

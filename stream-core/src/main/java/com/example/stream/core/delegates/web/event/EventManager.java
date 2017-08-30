@@ -11,10 +11,6 @@ public class EventManager {
 
     private static final HashMap<String, Event> EVENTS = new HashMap<>();
 
-    {
-        EVENTS.put("test", new TestEvent());
-    }
-
     private EventManager(){
 
     }

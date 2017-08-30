@@ -2,7 +2,10 @@ package com.example.stream.core.app;
 
 import android.app.Activity;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 
+import com.example.stream.core.delegates.web.event.Event;
+import com.example.stream.core.delegates.web.event.EventManager;
 import com.joanzapata.iconify.IconFontDescriptor;
 import com.joanzapata.iconify.Iconify;
 import com.orhanobut.logger.AndroidLogAdapter;
@@ -76,7 +79,21 @@ public class Configurator {
         return this;
     }
 
+    public Configurator withJavaScriptInterface(@NonNull String name){
+        STREAM_CONFIGS.put(ConfigKey.JS_INTERFACE, name);
+        return this;
+    }
 
+    public Configurator withWebEvent(@NonNull String eventName, @NonNull Event event){
+        final EventManager eventManager = EventManager.getInstance();
+        eventManager.addEvent(eventName, event);
+        return this;
+    }
+
+    public Configurator withWebHost(String hostName) {
+        STREAM_CONFIGS.put(ConfigKey.WEB_HOST, hostName);
+        return this;
+    }
 
     public final Configurator withIcon(IconFontDescriptor descriptor) {
         ICONS.add(descriptor);

@@ -1,8 +1,10 @@
-package com.example.stream.core.delegates.web.event;
+package com.example.stream.jx.event;
 
 import android.annotation.SuppressLint;
 import android.webkit.WebView;
 import android.widget.Toast;
+
+import com.example.stream.core.delegates.web.event.Event;
 
 /**
  * Created by StReaM on 8/29/2017.

@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.webkit.WebView;
 
+import com.example.stream.core.app.ConfigKey;
+import com.example.stream.core.app.Configurator;
+import com.example.stream.core.app.StreamCore;
 import com.example.stream.core.delegates.StreamDelegate;
 import com.example.stream.core.delegates.web.route.RouteKeys;
 
@@ -54,7 +57,9 @@ public abstract class BaseWebDelegate extends StreamDelegate implements IWebView
                 mWebView.setWebViewClient(initializer.initWebViewClient());
                 mWebView.setWebChromeClient(initializer.initWebChromeClient());
                 // for interactive with native JS
-                mWebView.addJavascriptInterface(StreamWebInterface.create(this), "bear");
+
+                final String name = StreamCore.getConfigurations(ConfigKey.JS_INTERFACE);
+                mWebView.addJavascriptInterface(StreamWebInterface.create(this), name);
                 mIsWebViewAvailable = true;
             } else {
                 throw new NullPointerException("initializer is null");

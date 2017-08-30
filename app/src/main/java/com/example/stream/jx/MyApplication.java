@@ -3,7 +3,8 @@ package com.example.stream.jx;
 import android.app.Application;
 
 import com.example.stream.core.app.StreamCore;
-import com.example.stream.core.network.interceptors.DebugInterceptor;
+import com.example.stream.core.network.rx.AddCookieInterceptor;
+import com.example.stream.jx.event.TestEvent;
 import com.example.stream.eb.Icon.FontEbModule;
 import com.example.stream.eb.database.DatabaseManager;
 import com.facebook.stetho.Stetho;
@@ -24,7 +25,12 @@ public class MyApplication extends Application {
 //                .withInterceptor(new DebugInterceptor("index", R.raw.mock))
                 .withWeChatAppID("")
                 .withWeChatAppSecret("")
+                .withJavaScriptInterface("bear")
+                .withWebEvent("test", new TestEvent())
+                .withWebHost("https://www.baidu.com/")
+                .withInterceptor(new AddCookieInterceptor())
                 .congfigure();
+
         initStetho();
         DatabaseManager.getInstance().init(this);
     }

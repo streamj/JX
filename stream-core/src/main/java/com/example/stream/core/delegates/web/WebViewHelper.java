@@ -1,7 +1,9 @@
 package com.example.stream.core.delegates.web;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.view.View;
+import android.webkit.CookieManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
@@ -14,6 +16,15 @@ public class WebViewHelper {
     @SuppressLint({"NewApi", "SetJavaScriptEnabled"})
     public WebView createWebView(WebView webView) {
         WebView.setWebContentsDebuggingEnabled(true);
+
+        // cookie
+        final CookieManager cookieManager = CookieManager.getInstance();
+        cookieManager.setAcceptCookie(true);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            cookieManager.setAcceptThirdPartyCookies(webView, true);
+        }
+        CookieManager.setAcceptFileSchemeCookies(true);
+
         // disable horizontal scroll
         webView.setHorizontalScrollBarEnabled(false);
         // disable vertical scroll
