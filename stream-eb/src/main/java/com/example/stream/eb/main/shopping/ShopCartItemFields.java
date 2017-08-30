@@ -10,4 +10,5 @@ enum  ShopCartItemFields {
     DESC,
     COUNT,
     PRICE,
+    SELECTED,
 }
