@@ -3,5 +3,8 @@
     <color name="app_background"> #1111</color>
     <color name="we_chat_black">#323232</color>
     <color name="item_background">#f1f1f1</color>
-    <color name="item_choosed">@android:color/holo_blue_dark</color>
+    <color name="light_blue_50">#e1f5fe</color>
+    <color name="light_blue_800">#0277bd</color>
+    <color name="item_choose">#03a9f4</color>
+    <color name="grey_700">#616161</color>
 </resources>

@@ -5,6 +5,7 @@ package com.example.stream.core.network.callback;
  */
 
 public interface ISuccess {
+
     void onSuccess(String response);
 
 }

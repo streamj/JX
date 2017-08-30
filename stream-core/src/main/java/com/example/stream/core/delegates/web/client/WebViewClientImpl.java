@@ -74,6 +74,5 @@ public class WebViewClientImpl extends WebViewClient {
                 Preference.addCustomAppProfile("cookie", cookieStr);
             }
         }
-
     }
 }

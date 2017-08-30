@@ -68,8 +68,8 @@ public class SortRecyclerAdapter extends ComplexRecyclerAdapter {
                     itemView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.item_background));
                 } else {
                     line.setVisibility(View.VISIBLE);
-                    line.setBackgroundColor(ContextCompat.getColor(mContext, R.color.item_choosed));
-                    atv.setTextColor(ContextCompat.getColor(mContext, R.color.item_choosed));
+                    line.setBackgroundColor(ContextCompat.getColor(mContext, R.color.item_choose));
+                    atv.setTextColor(ContextCompat.getColor(mContext, R.color.item_choose));
                     itemView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.item_background));
                 }
                 atv.setText(name);

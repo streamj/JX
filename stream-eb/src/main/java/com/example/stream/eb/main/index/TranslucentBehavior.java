@@ -18,7 +18,7 @@ import com.tencent.mm.opensdk.utils.Log;
 public class TranslucentBehavior extends CoordinatorLayout.Behavior<Toolbar> {
     private int mOffset_Y = 0;
     private static final int velocity = 3;
-    private final RgbValue RGB_VALUE = RgbValue.create(51,181,229);
+    private final RgbValue RGB_VALUE = RgbValue.create(1,66,96);
 
     // must have this constructor, or will get error
     public TranslucentBehavior(Context context, AttributeSet attrs) {

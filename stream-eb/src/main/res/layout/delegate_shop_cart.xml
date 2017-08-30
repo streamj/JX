@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:background="#1111"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:gravity="center"
+        android:background="@color/item_choose"
+        android:layout_width="match_parent"
+        android:layout_height="75dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tv_clear_cart"
+                android:text="清空购物车"
+                android:textSize="13sp"
+                android:paddingTop="20dp"
+                android:gravity="center"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+            <android.support.v7.widget.AppCompatTextView
+                android:paddingTop="20dp"
+                android:text="购物车"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:paddingTop="20dp"
+                android:id="@+id/tv_delete_product"
+                android:text="删除商品"
+                android:textSize="13sp"
+                android:gravity="center"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+        </RelativeLayout>
+
+
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_shop_cart"
+        android:layout_width="match_parent"
+        android:layout_weight="8"
+        android:layout_height="0dp"/>
+
+    <android.support.v7.widget.ViewStubCompat
+        android:orientation="horizontal"
+        android:background="@android:color/white"
+        android:layout_weight="1"
+        android:minHeight="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+
+    <android.support.v7.widget.LinearLayoutCompat
+        android:orientation="horizontal"
+        android:minHeight="50dp"
+        android:layout_gravity="bottom"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:orientation="horizontal"
+            android:minHeight="50dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:background="@color/light_blue_50"
+            android:layout_height="match_parent">
+            
+            <com.joanzapata.iconify.widget.IconTextView
+                android:id="@+id/icon_select_all"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="@android:color/darker_gray"
+                android:text="{fa-check-circle}"
+                android:layout_height="match_parent"/>
+            
+            <android.support.v7.widget.AppCompatTextView
+                android:textColor="@color/grey_700"
+                android:layout_weight="1"
+                android:text="全选"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"/>
+
+        </android.support.v7.widget.LinearLayoutCompat>
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:orientation="horizontal"
+            android:minHeight="50dp"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:background="@color/light_blue_50"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:text="合计"
+                android:textColor="@android:color/darker_gray"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:text="0.01"
+                android:typeface="sans"
+                android:textColor="@color/grey_700"
+                android:gravity="center|left"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:layout_height="match_parent"/>
+
+        </android.support.v7.widget.LinearLayoutCompat>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:textSize="20sp"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:background="@color/item_choose"
+            android:text="结算"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"/>
+
+
+    </android.support.v7.widget.LinearLayoutCompat>
+</android.support.v7.widget.LinearLayoutCompat>
