@@ -1,5 +1,7 @@
 package com.example.stream.eb.main.shopping;
 
+import android.util.Log;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -37,6 +39,7 @@ public class ShopCartDataConverter extends DataConverter {
                     .setField(ShopCartItemFields.COUNT, count)
                     .setField(ShopCartItemFields.PRICE, price)
                     .setField(ShopCartItemFields.SELECTED, false)
+                    .setField(ShopCartItemFields.POSITION, i)
                     .build();
 
             dataList.add(itemEntity);

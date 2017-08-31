@@ -15,8 +15,10 @@ import com.example.stream.core.ui.recycler.ComplexItemEntity;
 import com.example.stream.eb.R;
 import com.example.stream.eb.R2;
 import com.joanzapata.iconify.widget.IconTextView;
+import com.tencent.mm.opensdk.utils.Log;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -26,6 +28,10 @@ import butterknife.OnClick;
  */
 
 public class ShopCartDelegate extends BottomPageDelegate implements ISuccess {
+    private ShopCartAdapter mAdapter = null;
+    private int mCurrentCount = 0;
+    private int mTotalCount = 0;
+
     @BindView(R2.id.rv_shop_cart)
     RecyclerView mRecyclerView = null;
     @BindView(R2.id.icon_select_all)
@@ -40,16 +46,48 @@ public class ShopCartDelegate extends BottomPageDelegate implements ISuccess {
                     .setTextColor(ContextCompat.getColor(getContext(), R.color.item_choose));
             mIconSelectAll.setTag(1);
             mAdapter.setSelectAll(true);
-            mAdapter.notifyDataSetChanged();
+            mAdapter.notifyItemRangeChanged(0, mAdapter.getItemCount());
         } else {
             mIconSelectAll.setTextColor(Color.GRAY);
             mIconSelectAll.setTag(0);
             mAdapter.setSelectAll(false);
-            mAdapter.notifyDataSetChanged();
+            mAdapter.notifyItemRangeChanged(0, mAdapter.getItemCount());
         }
     }
 
-    private ShopCartAdapter mAdapter = null;
+    @OnClick(R2.id.tv_delete_product)
+    void onClickDelete(){
+        final List<ComplexItemEntity> dataList = mAdapter.getData();
+        final List<ComplexItemEntity> deleteEntities = new ArrayList<>();
+        for (ComplexItemEntity entity: dataList) {
+            final boolean selected = entity.getField(ShopCartItemFields.SELECTED);
+            if (selected) {
+                deleteEntities.add(entity);
+            }
+        }
+
+        for (ComplexItemEntity entity: deleteEntities) {
+            int removePosition;
+            final int entityPosition = entity.getField(ShopCartItemFields.POSITION);
+            if (entityPosition > mCurrentCount - 1) {
+                removePosition = entityPosition - (mTotalCount - mCurrentCount);
+            } else {
+                removePosition = entityPosition;
+            }
+
+            if (removePosition <= mAdapter.getItemCount()) {
+                mAdapter.remove(removePosition);
+                mCurrentCount = mAdapter.getItemCount();
+                mAdapter.notifyItemRangeChanged(removePosition, mAdapter.getItemCount());
+            }
+        }
+    }
+
+    @OnClick(R2.id.tv_clear_cart)
+    void onClearCart() {
+        mAdapter.getData().clear();
+        mAdapter.notifyDataSetChanged();
+    }
 
     @Override
     public Object setLayout() {
