@@ -29,8 +29,6 @@ import butterknife.OnClick;
 
 public class ShopCartDelegate extends BottomPageDelegate implements ISuccess {
     private ShopCartAdapter mAdapter = null;
-    private int mCurrentCount = 0;
-    private int mTotalCount = 0;
 
     @BindView(R2.id.rv_shop_cart)
     RecyclerView mRecyclerView = null;
@@ -39,8 +37,8 @@ public class ShopCartDelegate extends BottomPageDelegate implements ISuccess {
 
     // 对整个 recyclerView 设置全选
     @OnClick(R2.id.icon_select_all)
-    void onClickSelectAll(View view){
-        final int tag = (int)mIconSelectAll.getTag();
+    void onClickSelectAll(View view) {
+        final int tag = (int) mIconSelectAll.getTag();
         if (tag == 0) {
             mIconSelectAll
                     .setTextColor(ContextCompat.getColor(getContext(), R.color.item_choose));
@@ -56,31 +54,23 @@ public class ShopCartDelegate extends BottomPageDelegate implements ISuccess {
     }
 
     @OnClick(R2.id.tv_delete_product)
-    void onClickDelete(){
+    void onClickDelete() {
+        // 没法一边迭代一边删除元素
         final List<ComplexItemEntity> dataList = mAdapter.getData();
-        final List<ComplexItemEntity> deleteEntities = new ArrayList<>();
-        for (ComplexItemEntity entity: dataList) {
+        final List<Integer> deleteIndex = new ArrayList<>();
+        final int size = dataList.size();
+        for (int i = 0; i < size; i++) {
+            ComplexItemEntity entity = dataList.get(i);
             final boolean selected = entity.getField(ShopCartItemFields.SELECTED);
             if (selected) {
-                deleteEntities.add(entity);
+                deleteIndex.add(i);
             }
         }
-
-        for (ComplexItemEntity entity: deleteEntities) {
-            int removePosition;
-            final int entityPosition = entity.getField(ShopCartItemFields.POSITION);
-            if (entityPosition > mCurrentCount - 1) {
-                removePosition = entityPosition - (mTotalCount - mCurrentCount);
-            } else {
-                removePosition = entityPosition;
-            }
-
-            if (removePosition <= mAdapter.getItemCount()) {
-                mAdapter.remove(removePosition);
-                mCurrentCount = mAdapter.getItemCount();
-                mAdapter.notifyItemRangeChanged(removePosition, mAdapter.getItemCount());
-            }
+        final int j = deleteIndex.size();
+        for (Integer i : deleteIndex) {
+            dataList.remove((j-i-1)); // reverse, prevent from IndexOutOfBoundsException while deleteing
         }
+        mAdapter.notifyDataSetChanged();
     }
 
     @OnClick(R2.id.tv_clear_cart)
@@ -112,8 +102,8 @@ public class ShopCartDelegate extends BottomPageDelegate implements ISuccess {
     @Override
     public void onSuccess(String response) {
         final ArrayList<ComplexItemEntity> list = new ShopCartDataConverter()
-                        .setJsonData(response)
-                        .convert();
+                .setJsonData(response)
+                .convert();
         mAdapter = new ShopCartAdapter(list);
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(linearLayoutManager);
