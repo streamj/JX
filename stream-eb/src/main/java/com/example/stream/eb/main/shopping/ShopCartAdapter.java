@@ -10,12 +10,15 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.stream.core.app.StreamCore;
+import com.example.stream.core.network.RestClient;
+import com.example.stream.core.network.callback.ISuccess;
 import com.example.stream.core.ui.recycler.ComplexFields;
 import com.example.stream.core.ui.recycler.ComplexItemEntity;
 import com.example.stream.core.ui.recycler.ComplexRecyclerAdapter;
 import com.example.stream.core.ui.recycler.ComplexViewHolder;
 import com.example.stream.eb.R;
 import com.joanzapata.iconify.widget.IconTextView;
+import com.tencent.mm.opensdk.utils.Log;
 
 import java.util.List;
 
@@ -99,6 +102,48 @@ public class ShopCartAdapter extends ComplexRecyclerAdapter {
                             selectedIText.setTextColor(selectedColor);
                             item.setField(ShopCartItemFields.SELECTED, true);
                         }
+                    }
+                });
+                minus.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        final int currentCount = item.getField(ShopCartItemFields.COUNT);
+                        if (currentCount > 1) {
+                            RestClient.Builder()
+                                    .url("shop_cart_count.php")
+//                                    .loaderStyle(mContext)
+                                    .params("count", currentCount)
+                                    .success(new ISuccess() {
+                                        @Override
+                                        public void onSuccess(String response) {
+                                            int count = currentCount;
+                                            count--;
+                                            tvCount.setText(String.valueOf(count));
+                                            item.setField(ShopCartItemFields.COUNT, count);
+                                        }
+                                    })
+                                    .build().post();
+                        }
+                    }
+                });
+                plus.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        final int currentCount = item.getField(ShopCartItemFields.COUNT);
+                        RestClient.Builder()
+                                .url("shop_cart_count.php")
+//                                    .loaderStyle(mContext)
+                                .params("count", currentCount)
+                                .success(new ISuccess() {
+                                    @Override
+                                    public void onSuccess(String response) {
+                                        int count = currentCount;
+                                        count++;
+                                        tvCount.setText(String.valueOf(count));
+                                        item.setField(ShopCartItemFields.COUNT, count);
+                                    }
+                                })
+                                .build().post();
                     }
                 });
                 break;
