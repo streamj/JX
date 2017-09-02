@@ -18,7 +18,6 @@ import com.example.stream.core.ui.recycler.ComplexRecyclerAdapter;
 import com.example.stream.core.ui.recycler.ComplexViewHolder;
 import com.example.stream.eb.R;
 import com.joanzapata.iconify.widget.IconTextView;
-import com.tencent.mm.opensdk.utils.Log;
 
 import java.util.List;
 
@@ -29,6 +28,20 @@ import java.util.List;
 public class ShopCartAdapter extends ComplexRecyclerAdapter {
 
     private boolean mSelectAll = false;
+    private ICartItemListener mICartItemListener = null;
+    private double mTotalPrice = 0.0;
+
+    public double getTotalPrice() {
+        return mTotalPrice;
+    }
+
+    public void totalPriceDecrease(double price) {
+        mTotalPrice -= price;
+    }
+
+    public void setICartItemListener(ICartItemListener ICartItemListener) {
+        mICartItemListener = ICartItemListener;
+    }
 
     private static final RequestOptions OPTIONS = new RequestOptions()
             .dontAnimate()
@@ -37,7 +50,16 @@ public class ShopCartAdapter extends ComplexRecyclerAdapter {
 
     protected ShopCartAdapter(List<ComplexItemEntity> data) {
         super(data);
+        calculateTotalPrice(data);
         addItemType(ShopCartItemType.SHOP_CART_ITEM, R.layout.item_shop_cart);
+    }
+
+    private void calculateTotalPrice(List<ComplexItemEntity> data) {
+        for (ComplexItemEntity entity: data) {
+            final double price = entity.getField(ShopCartItemFields.PRICE);
+            final int count = entity.getField(ShopCartItemFields.COUNT);
+            mTotalPrice += (price * count);
+        }
     }
 
     public void setSelectAll(boolean selected){
@@ -104,6 +126,7 @@ public class ShopCartAdapter extends ComplexRecyclerAdapter {
                         }
                     }
                 });
+                //  这个加减只为模拟，并不是最好的做法
                 minus.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -120,6 +143,10 @@ public class ShopCartAdapter extends ComplexRecyclerAdapter {
                                             count--;
                                             tvCount.setText(String.valueOf(count));
                                             item.setField(ShopCartItemFields.COUNT, count);
+                                            if (mICartItemListener != null) {
+                                                mTotalPrice -= price;
+                                                mICartItemListener.onItemCountChange(price);
+                                            }
                                         }
                                     })
                                     .build().post();
@@ -141,6 +168,10 @@ public class ShopCartAdapter extends ComplexRecyclerAdapter {
                                         count++;
                                         tvCount.setText(String.valueOf(count));
                                         item.setField(ShopCartItemFields.COUNT, count);
+                                        if (mICartItemListener != null) {
+                                            mTotalPrice += price;
+                                            mICartItemListener.onItemCountChange(price);
+                                        }
                                     }
                                 })
                                 .build().post();

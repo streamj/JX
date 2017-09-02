@@ -118,6 +118,7 @@
                 android:layout_height="match_parent"/>
 
             <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tv_cart_total_price"
                 android:text="0.01"
                 android:typeface="sans"
                 android:textColor="@color/grey_700"

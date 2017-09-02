@@ -9,7 +9,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.ViewStubCompat;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.stream.core.delegates.bottom.BottomPageDelegate;
@@ -22,6 +21,7 @@ import com.joanzapata.iconify.widget.IconTextView;
 import com.tencent.mm.opensdk.utils.Log;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -31,7 +31,8 @@ import butterknife.OnClick;
  * Created by StReaM on 8/30/2017.
  */
 
-public class ShopCartDelegate extends BottomPageDelegate implements ISuccess {
+public class ShopCartDelegate extends BottomPageDelegate
+        implements ISuccess, ICartItemListener {
     private ShopCartAdapter mAdapter = null;
 
     @BindView(R2.id.rv_shop_cart)
@@ -40,7 +41,8 @@ public class ShopCartDelegate extends BottomPageDelegate implements ISuccess {
     IconTextView mIconSelectAll = null;
     @BindView(R2.id.stub_empty_cart)
     ViewStubCompat mEmptyCartStub = null;
-
+    @BindView(R2.id.tv_cart_total_price)
+    AppCompatTextView mTvTotalPrice = null;
 
     // 对整个 recyclerView 设置全选
     @OnClick(R2.id.icon_select_all)
@@ -73,10 +75,18 @@ public class ShopCartDelegate extends BottomPageDelegate implements ISuccess {
                 deleteIndex.add(i);
             }
         }
-        final int j = deleteIndex.size();
+        // reverse deleting, prevent from IndexOutOfBoundsException
+        Collections.reverse(deleteIndex);
+        double priceDecrese = 0.0;
         for (Integer i : deleteIndex) {
-            dataList.remove((j-i-1)); // reverse deleting, prevent from IndexOutOfBoundsException
+            ComplexItemEntity entity = dataList.get(i);
+            int count = entity.getField(ShopCartItemFields.COUNT);
+            double price = entity.getField(ShopCartItemFields.PRICE);
+            dataList.remove((int)i);
+            priceDecrese += (count * price);
         }
+        mAdapter.totalPriceDecrease(priceDecrese);
+        mTvTotalPrice.setText(String.valueOf(mAdapter.getTotalPrice()));
         mAdapter.notifyDataSetChanged();
         checkItemCounnt();
     }
@@ -133,9 +143,18 @@ public class ShopCartDelegate extends BottomPageDelegate implements ISuccess {
                 .setJsonData(response)
                 .convert();
         mAdapter = new ShopCartAdapter(list);
+        mAdapter.setICartItemListener(this);
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
+
+        mTvTotalPrice.setText(String.valueOf(mAdapter.getTotalPrice()));
         checkItemCounnt();
+    }
+
+    @Override
+    public void onItemCountChange(double changedPrice) {
+        final double totalPrice = mAdapter.getTotalPrice();
+        mTvTotalPrice.setText(String.valueOf(totalPrice));
     }
 }
