@@ -4,9 +4,13 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.ViewStubCompat;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.stream.core.delegates.bottom.BottomPageDelegate;
 import com.example.stream.core.network.RestClient;
@@ -34,6 +38,9 @@ public class ShopCartDelegate extends BottomPageDelegate implements ISuccess {
     RecyclerView mRecyclerView = null;
     @BindView(R2.id.icon_select_all)
     IconTextView mIconSelectAll = null;
+    @BindView(R2.id.stub_empty_cart)
+    ViewStubCompat mEmptyCartStub = null;
+
 
     // 对整个 recyclerView 设置全选
     @OnClick(R2.id.icon_select_all)
@@ -68,15 +75,36 @@ public class ShopCartDelegate extends BottomPageDelegate implements ISuccess {
         }
         final int j = deleteIndex.size();
         for (Integer i : deleteIndex) {
-            dataList.remove((j-i-1)); // reverse, prevent from IndexOutOfBoundsException while deleteing
+            dataList.remove((j-i-1)); // reverse deleting, prevent from IndexOutOfBoundsException
         }
         mAdapter.notifyDataSetChanged();
+        checkItemCounnt();
     }
 
     @OnClick(R2.id.tv_clear_cart)
     void onClearCart() {
         mAdapter.getData().clear();
         mAdapter.notifyDataSetChanged();
+        checkItemCounnt();
+    }
+
+    private void checkItemCounnt() {
+        final int count = mAdapter.getItemCount();
+        if (count == 0) {
+            final View stubView = mEmptyCartStub.inflate();
+            final AppCompatTextView emptyCartText =
+                    (AppCompatTextView)stubView.findViewById(R.id.tv_stub_empty_cart);
+            emptyCartText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(getContext(), "购物车是空的啊",
+                            Toast.LENGTH_LONG).show();
+                }
+            });
+            mRecyclerView.setVisibility(View.GONE);
+        } else {
+            mRecyclerView.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -108,5 +136,6 @@ public class ShopCartDelegate extends BottomPageDelegate implements ISuccess {
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
+        checkItemCounnt();
     }
 }
