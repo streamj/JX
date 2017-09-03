@@ -10,13 +10,19 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.example.stream.core.app.ConfigKey;
+import com.example.stream.core.app.StreamCore;
 import com.example.stream.core.delegates.StreamDelegate;
 import com.example.stream.core.network.RestClient;
 import com.example.stream.core.network.callback.ISuccess;
 import com.example.stream.core.ui.loader.StreamLoader;
 import com.example.stream.core.util.log.StreamLogger;
+import com.example.stream.core.wechat.StreamWeChat;
 import com.example.stream.eb.R;
+import com.tencent.mm.opensdk.modelpay.PayReq;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
 
 /**
  * Created by StReaM on 9/3/2017.
@@ -87,6 +93,40 @@ public class RapidPay implements View.OnClickListener {
                 .post();
     }
 
+    public final void weChatPay(int orderId) {
+        StreamLoader.stopLoading();
+        final String weChatPrePayUrl = "yourUrl";
+        final IWXAPI iwxapi = StreamWeChat.getInstance().getWXAPI();
+        final String appId = StreamCore.getConfigurations(ConfigKey.WE_CHAT_APP_ID);
+        iwxapi.registerApp(appId);
+        RestClient.Builder()
+                .url(weChatPrePayUrl)
+                .success(new ISuccess() {
+                    @Override
+                    public void onSuccess(String response) {
+                        final JSONObject result = JSON.parseObject(response).getJSONObject("result");
+                        final String prepayId = result.getString("prepayid");
+                        final String partnerId = result.getString("partnerid");
+                        final String packageValue = result.getString("package");
+                        final String timestamp = result.getString("timestamp");
+                        final String nonceStr = result.getString("noncestr");
+                        final String paySign = result.getString("sign");
+
+                        final PayReq payReq = new PayReq();
+                        payReq.appId = appId;
+                        payReq.prepayId = prepayId;
+                        payReq.partnerId = partnerId;
+                        payReq.packageValue = packageValue;
+                        payReq.timeStamp = timestamp;
+                        payReq.nonceStr = nonceStr;
+                        payReq.sign = paySign;
+                        iwxapi.sendReq(payReq);
+                    }
+                })
+                .build()
+                .post();
+    }
+
     public RapidPay setIAliPayResultListener(IAliPayResultListener IAliPayResultListener) {
         mIAliPayResultListener = IAliPayResultListener;
         return this;
@@ -104,6 +144,7 @@ public class RapidPay implements View.OnClickListener {
             aliPay(mOrderId);
             mDialog.cancel();
         } else if (id == R.id.icon_weixin_pay) {
+            weChatPay(mOrderId);
             mDialog.cancel();
         } else if (id == R.id.btn_cancel_pay) {
             mDialog.cancel();
