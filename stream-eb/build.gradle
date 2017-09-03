@@ -31,6 +31,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile project(':stream-core')
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-    compile files('libs/alipay-sdk-java20170829142630.jar')
-    compile files('libs/commons-logging-1.1.1.jar')
+    compile files('libs/alipaySdk-20170725.jar')
 }

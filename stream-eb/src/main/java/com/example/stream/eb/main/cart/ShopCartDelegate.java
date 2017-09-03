@@ -11,12 +11,15 @@ import android.support.v7.widget.ViewStubCompat;
 import android.view.View;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.example.stream.core.delegates.bottom.BottomPageDelegate;
 import com.example.stream.core.network.RestClient;
 import com.example.stream.core.network.callback.ISuccess;
 import com.example.stream.core.ui.recycler.ComplexItemEntity;
+import com.example.stream.core.util.log.StreamLogger;
 import com.example.stream.eb.R;
 import com.example.stream.eb.R2;
+import com.example.stream.eb.pay.IAliPayResultListener;
 import com.example.stream.eb.pay.RapidPay;
 import com.joanzapata.iconify.widget.IconTextView;
 
@@ -33,7 +36,7 @@ import butterknife.OnClick;
  */
 
 public class ShopCartDelegate extends BottomPageDelegate
-        implements ISuccess, ICartItemListener {
+        implements ISuccess, ICartItemListener, IAliPayResultListener{
     private ShopCartAdapter mAdapter = null;
 
     @BindView(R2.id.rv_shop_cart)
@@ -101,15 +104,15 @@ public class ShopCartDelegate extends BottomPageDelegate
 
     @OnClick(R2.id.tv_cart_settle)
     void onClickSettle() {
-        RapidPay.create(this).startPayDialog();
+        createOrder();
     }
 
     // 第一步，创建订单
     private void createOrder() {
-        final String orderUrl = "";
+        final String orderUrl = "yourOrderUrl";
         final WeakHashMap<String, Object> params = new WeakHashMap<>();
-        params.put("userid", 123);
-        params.put("amount", 0.9);
+        params.put("userid", 123); // your userid
+        params.put("amount", 0.9); // calculate the amount
         params.put("comment", "fuck");
         params.put("type", 1);
         params.put("ordertype", 0);
@@ -122,7 +125,13 @@ public class ShopCartDelegate extends BottomPageDelegate
                 .success(new ISuccess() {
                     @Override
                     public void onSuccess(String response) {
-
+                        StreamLogger.d("create order", response);
+                        // 具体的支付
+                        final int orderId = JSON.parseObject(response).getInteger("result");
+                        RapidPay.create(ShopCartDelegate.this)
+                                .setIAliPayResultListener(ShopCartDelegate.this)
+                                .setOrderId(orderId)
+                                .startPayDialog();
                     }
                 })
                 .build()
@@ -187,5 +196,30 @@ public class ShopCartDelegate extends BottomPageDelegate
     public void onItemCountChange(double changedPrice) {
         final double totalPrice = mAdapter.getTotalPrice();
         mTvTotalPrice.setText(String.valueOf(totalPrice));
+    }
+
+    @Override
+    public void onPaySuccess() {
+
+    }
+
+    @Override
+    public void onProgressing() {
+
+    }
+
+    @Override
+    public void onPayFail() {
+
+    }
+
+    @Override
+    public void onPayCancel() {
+
+    }
+
+    @Override
+    public void onPayNetworkError() {
+
     }
 }
