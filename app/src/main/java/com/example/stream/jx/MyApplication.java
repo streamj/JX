@@ -1,6 +1,7 @@
 package com.example.stream.jx;
 
 import android.app.Application;
+import android.support.multidex.MultiDexApplication;
 
 import com.example.stream.core.app.StreamCore;
 import com.example.stream.core.network.rx.AddCookieInterceptor;
@@ -14,7 +15,7 @@ import com.joanzapata.iconify.fonts.FontAwesomeModule;
  * Created by StReaM on 8/12/2017.
  */
 
-public class MyApplication extends Application {
+public class MyApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();

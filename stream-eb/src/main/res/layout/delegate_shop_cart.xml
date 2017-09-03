@@ -131,6 +131,7 @@
         </android.support.v7.widget.LinearLayoutCompat>
 
         <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/tv_cart_settle"
             android:textSize="20sp"
             android:gravity="center"
             android:textColor="@android:color/white"

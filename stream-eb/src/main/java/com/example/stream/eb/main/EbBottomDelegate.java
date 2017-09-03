@@ -8,7 +8,7 @@ import com.example.stream.core.delegates.bottom.BottomTabBean;
 import com.example.stream.core.delegates.bottom.ItemBuilder;
 import com.example.stream.eb.main.discover.DiscoverDelegate;
 import com.example.stream.eb.main.index.IndexDelegate;
-import com.example.stream.eb.main.shopping.ShopCartDelegate;
+import com.example.stream.eb.main.cart.ShopCartDelegate;
 import com.example.stream.eb.main.sort.SortDelegate;
 
 import java.util.LinkedHashMap;

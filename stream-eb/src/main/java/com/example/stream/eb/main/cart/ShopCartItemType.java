@@ -1,4 +1,4 @@
-package com.example.stream.eb.main.shopping;
+package com.example.stream.eb.main.cart;
 
 /**
  * Created by StReaM on 8/30/2017.

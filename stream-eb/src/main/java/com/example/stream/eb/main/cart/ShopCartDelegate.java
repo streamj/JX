@@ -1,4 +1,4 @@
-package com.example.stream.eb.main.shopping;
+package com.example.stream.eb.main.cart;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -17,12 +17,13 @@ import com.example.stream.core.network.callback.ISuccess;
 import com.example.stream.core.ui.recycler.ComplexItemEntity;
 import com.example.stream.eb.R;
 import com.example.stream.eb.R2;
+import com.example.stream.eb.pay.RapidPay;
 import com.joanzapata.iconify.widget.IconTextView;
-import com.tencent.mm.opensdk.utils.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.WeakHashMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -92,10 +93,40 @@ public class ShopCartDelegate extends BottomPageDelegate
     }
 
     @OnClick(R2.id.tv_clear_cart)
-    void onClearCart() {
+    void onClickClearCart() {
         mAdapter.getData().clear();
         mAdapter.notifyDataSetChanged();
         checkItemCounnt();
+    }
+
+    @OnClick(R2.id.tv_cart_settle)
+    void onClickSettle() {
+        RapidPay.create(this).startPayDialog();
+    }
+
+    // 第一步，创建订单
+    private void createOrder() {
+        final String orderUrl = "";
+        final WeakHashMap<String, Object> params = new WeakHashMap<>();
+        params.put("userid", 123);
+        params.put("amount", 0.9);
+        params.put("comment", "fuck");
+        params.put("type", 1);
+        params.put("ordertype", 0);
+        params.put("isanonymous", true);
+        params.put("followeduser", 0);
+        RestClient.Builder()
+                .url(orderUrl)
+                .loaderStyle(getContext())
+                .params(params)
+                .success(new ISuccess() {
+                    @Override
+                    public void onSuccess(String response) {
+
+                    }
+                })
+                .build()
+                .post();
     }
 
     private void checkItemCounnt() {
