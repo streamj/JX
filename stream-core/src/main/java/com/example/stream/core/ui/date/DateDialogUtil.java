@@ -18,7 +18,7 @@ import java.util.Locale;
 public class DateDialogUtil {
 
     public interface  IDateListener {
-        void onDateChange(String date);
+        void onChangeBirth(String date);
     }
 
     private IDateListener mIDateListener = null;
@@ -43,7 +43,7 @@ public class DateDialogUtil {
                         Locale.getDefault());
                 final String data = format.format(calendar.getTime());
                 if (mIDateListener != null) {
-                    mIDateListener.onDateChange(data);
+                    mIDateListener.onChangeBirth(data);
                 }
             }
         });

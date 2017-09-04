@@ -58,7 +58,7 @@ public class UserProfileClickListener extends SimpleClickListener {
                 final DateDialogUtil dateDialogUtil = new DateDialogUtil();
                 dateDialogUtil.setIDateListener(new DateDialogUtil.IDateListener() {
                     @Override
-                    public void onDateChange(String date) {
+                    public void onChangeBirth(String date) {
                         final TextView textView = (TextView) view.findViewById(R.id.tv_arrow_value);
                         textView.setText(date);
                     }
