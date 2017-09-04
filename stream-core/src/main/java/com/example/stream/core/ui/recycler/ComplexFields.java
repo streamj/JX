@@ -13,4 +13,5 @@ public enum ComplexFields {
     ID,
     NAME,
     TAG,
+    TITLE,
 }

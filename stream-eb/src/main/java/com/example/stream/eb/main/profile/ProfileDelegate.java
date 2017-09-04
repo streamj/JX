@@ -11,11 +11,13 @@ import com.example.stream.eb.R;
 import com.example.stream.eb.R2;
 import com.example.stream.eb.main.profile.list.ListAdapter;
 import com.example.stream.eb.main.profile.list.ListBean;
+import com.example.stream.eb.main.profile.order.OrderListDelegate;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by StReaM on 9/3/2017.
@@ -23,8 +25,23 @@ import butterknife.BindView;
 
 public class ProfileDelegate extends BottomPageDelegate {
 
+    public static final String ORDER_TYPE = "order_type";
+    private Bundle mBundle = new Bundle();
+
     @BindView(R2.id.rv_profile_setting)
     RecyclerView mRecyclerView = null;
+
+    private void startOrderListByType() {
+        final OrderListDelegate delegate = new OrderListDelegate();
+        delegate.setArguments(mBundle);
+        getParentDelegate().start(delegate);
+    }
+
+    @OnClick(R2.id.tv_all_order)
+    void onAllOrderClick() {
+        mBundle.putString(ORDER_TYPE, "all");
+        startOrderListByType();
+    }
 
     @Override
     public Object setLayout() {
