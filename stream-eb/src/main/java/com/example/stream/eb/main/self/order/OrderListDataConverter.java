@@ -1,4 +1,4 @@
-package com.example.stream.eb.main.profile.order;
+package com.example.stream.eb.main.self.order;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;

@@ -1,4 +1,4 @@
-package com.example.stream.eb.main.profile.order;
+package com.example.stream.eb.main.self.order;
 
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;

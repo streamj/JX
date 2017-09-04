@@ -1,4 +1,4 @@
-package com.example.stream.eb.main.profile.order;
+package com.example.stream.eb.main.self.order;
 
 /**
  * Created by StReaM on 9/4/2017.

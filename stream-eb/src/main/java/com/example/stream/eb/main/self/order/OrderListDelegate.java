@@ -1,4 +1,4 @@
-package com.example.stream.eb.main.profile.order;
+package com.example.stream.eb.main.self.order;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,7 +12,7 @@ import com.example.stream.core.network.callback.ISuccess;
 import com.example.stream.core.ui.recycler.ComplexItemEntity;
 import com.example.stream.eb.R;
 import com.example.stream.eb.R2;
-import com.example.stream.eb.main.profile.ProfileDelegate;
+import com.example.stream.eb.main.self.SelfDelegate;
 
 import java.util.List;
 
@@ -37,7 +37,7 @@ public class OrderListDelegate extends StreamDelegate {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final Bundle args = getArguments();
-        mType = args.getString(ProfileDelegate.ORDER_TYPE);
+        mType = args.getString(SelfDelegate.ORDER_TYPE);
     }
 
     @Override

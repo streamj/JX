@@ -1,4 +1,4 @@
-package com.example.stream.eb.main.profile;
+package com.example.stream.eb.main.self;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,9 +9,11 @@ import android.view.View;
 import com.example.stream.core.delegates.bottom.BottomPageDelegate;
 import com.example.stream.eb.R;
 import com.example.stream.eb.R2;
-import com.example.stream.eb.main.profile.list.ListAdapter;
-import com.example.stream.eb.main.profile.list.ListBean;
-import com.example.stream.eb.main.profile.order.OrderListDelegate;
+import com.example.stream.eb.main.self.list.ListAdapter;
+import com.example.stream.eb.main.self.list.ListBean;
+import com.example.stream.eb.main.self.list.ListItemType;
+import com.example.stream.eb.main.self.order.OrderListDelegate;
+import com.example.stream.eb.main.self.profile.ProfileDelegate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +25,7 @@ import butterknife.OnClick;
  * Created by StReaM on 9/3/2017.
  */
 
-public class ProfileDelegate extends BottomPageDelegate {
+public class SelfDelegate extends BottomPageDelegate {
 
     public static final String ORDER_TYPE = "order_type";
     private Bundle mBundle = new Bundle();
@@ -43,22 +45,27 @@ public class ProfileDelegate extends BottomPageDelegate {
         startOrderListByType();
     }
 
+    @OnClick(R2.id.img_user_avatar)
+    void onAvatarClick() {
+        getParentDelegate().start(new ProfileDelegate());
+    }
+
     @Override
     public Object setLayout() {
-        return R.layout.profile_delegate;
+        return R.layout.delegate_self;
     }
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
         ListBean addr = new ListBean.Builder()
-                .setItemType(20)
+                .setItemType(ListItemType.ITEM_NORMAL)
                 .setId(1)
                 .setText("收货地址")
                 .setValue("")
                 .build();
 
         ListBean sys = new ListBean.Builder()
-                .setItemType(20)
+                .setItemType(ListItemType.ITEM_NORMAL)
                 .setId(2)
                 .setText("系统设置")
                 .setValue("")

@@ -1,4 +1,4 @@
-package com.example.stream.eb.main.profile.list;
+package com.example.stream.eb.main.self.list;
 
 import android.widget.CompoundButton;
 
