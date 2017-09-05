@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 
+import com.blankj.utilcode.util.Utils;
 import com.example.stream.core.delegates.web.event.Event;
 import com.example.stream.core.delegates.web.event.EventManager;
 import com.joanzapata.iconify.IconFontDescriptor;
@@ -48,6 +49,7 @@ public class Configurator {
         initIcons();
         Logger.addLogAdapter(new AndroidLogAdapter());
         STREAM_CONFIGS.put(ConfigKey.CONFIG_READY.name(), true);
+        Utils.init(StreamCore.getApplicationContext());
     }
 
     public final Configurator withApiHost(String host) {
