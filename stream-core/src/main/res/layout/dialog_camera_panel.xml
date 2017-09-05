@@ -27,7 +27,7 @@
 
 
     <android.support.v7.widget.AppCompatButton
-        android:id="@+id/photodialog_btn_native"
+        android:id="@+id/photodialog_btn_local"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="center"

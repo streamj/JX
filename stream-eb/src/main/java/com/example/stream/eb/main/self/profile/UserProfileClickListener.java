@@ -2,6 +2,7 @@ package com.example.stream.eb.main.self.profile;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.net.Uri;
 import android.view.View;
 import android.widget.TextView;
 
@@ -9,6 +10,10 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.SimpleClickListener;
 import com.example.stream.core.delegates.StreamDelegate;
 import com.example.stream.core.ui.date.DateDialogUtil;
+import com.example.stream.core.util.callback.CallbackManager;
+import com.example.stream.core.util.callback.CallbackType;
+import com.example.stream.core.util.callback.IGlobalCallback;
+import com.example.stream.core.util.log.StreamLogger;
 import com.example.stream.eb.R;
 import com.example.stream.eb.main.self.list.ListBean;
 
@@ -40,6 +45,13 @@ public class UserProfileClickListener extends SimpleClickListener {
         switch (id) {
             case 1:
                 // 开始相机或者选择图片
+                CallbackManager.getInstance().addCallback(CallbackType.ON_CROP,
+                        new IGlobalCallback<Uri>() {
+                            @Override
+                            public void executeCallback(Uri args) {
+                                StreamLogger.d("callfuck", args);
+                            }
+                        });
                 mDelegate.startCameraWithCheck();
                 break;
             case 2:

@@ -50,7 +50,7 @@ public class CameraHandler implements View.OnClickListener {
             window.setAttributes(params);
 
             window.findViewById(R.id.photodialog_btn_take).setOnClickListener(this);
-            window.findViewById(R.id.photodialog_btn_native).setOnClickListener(this);
+            window.findViewById(R.id.photodialog_btn_local).setOnClickListener(this);
             window.findViewById(R.id.photodialog_btn_cancel).setOnClickListener(this);
         }
     }
@@ -61,7 +61,7 @@ public class CameraHandler implements View.OnClickListener {
         if (id == R.id.photodialog_btn_take) {
             takePhoto();
             DIALOG.cancel();
-        } else if (id == R.id.photodialog_btn_native) {
+        } else if (id == R.id.photodialog_btn_local) {
             pickPhoto();
             DIALOG.cancel();
         } else if (id == R.id.photodialog_btn_cancel) {
@@ -72,7 +72,7 @@ public class CameraHandler implements View.OnClickListener {
     private void takePhoto() {
         final String currentPhotoName = getPhotoName();
         final Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        final File tempFile = new File(FileUtil.CAMERA_PHOTO_DIR);
+        final File tempFile = new File(FileUtil.CAMERA_PHOTO_DIR, currentPhotoName);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             final ContentValues contentValues = new ContentValues();
@@ -83,13 +83,14 @@ public class CameraHandler implements View.OnClickListener {
             final File realFile = FileUtils
                     .getFileByPath(FileUtil.getRealFilePath(DELEGATE.getContext(), uri));
             final Uri realUri = Uri.fromFile(realFile);
-            CameraImageBean.getInstance().setPath(uri);
+            CameraImageBean.getInstance().setPath(realUri);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
         } else {
             final Uri fileUri = Uri.fromFile(tempFile);
             CameraImageBean.getInstance().setPath(fileUri);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
         }
+        // 请求权限
         DELEGATE.startActivityForResult(intent, RequestCodes.TAKE_PHOTO);
     }
 
@@ -102,6 +103,7 @@ public class CameraHandler implements View.OnClickListener {
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
+        // 请求权限
         DELEGATE.startActivityForResult(Intent.createChooser(intent, "选择获取图片方式"),
                 RequestCodes.PICK_PHOTO);
     }
