@@ -4,8 +4,10 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.net.Uri;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.SimpleClickListener;
 import com.example.stream.core.delegates.StreamDelegate;
@@ -16,6 +18,7 @@ import com.example.stream.core.util.callback.IGlobalCallback;
 import com.example.stream.core.util.log.StreamLogger;
 import com.example.stream.eb.R;
 import com.example.stream.eb.main.self.list.ListBean;
+
 
 /**
  * Created by StReaM on 9/5/2017.
@@ -50,6 +53,10 @@ public class UserProfileClickListener extends SimpleClickListener {
                             @Override
                             public void executeCallback(Uri args) {
                                 StreamLogger.d("callfuck", args);
+                                ImageView avatar = (ImageView) view.findViewById(R.id.img_arrow_avatar);
+                                Glide.with(mDelegate)
+                                        .load(args)
+                                        .into(avatar);
                             }
                         });
                 mDelegate.startCameraWithCheck();
