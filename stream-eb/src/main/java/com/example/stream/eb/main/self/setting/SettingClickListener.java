@@ -1,4 +1,4 @@
-package com.example.stream.eb.main.self;
+package com.example.stream.eb.main.self.setting;
 
 import android.view.View;
 
@@ -7,32 +7,32 @@ import com.chad.library.adapter.base.listener.SimpleClickListener;
 import com.example.stream.core.delegates.StreamDelegate;
 import com.example.stream.eb.main.self.list.ListBean;
 
-
 /**
- * Created by StReaM on 9/6/2017.
+ * Created by StReaM on 9/7/2017.
  */
 
-public class SelfClickListener extends SimpleClickListener {
-    private final StreamDelegate mDelegate;
+public class SettingClickListener extends SimpleClickListener {
+    private StreamDelegate mDelegate;
 
-    public SelfClickListener(StreamDelegate delegate) {
+    public SettingClickListener(StreamDelegate delegate) {
         mDelegate = delegate;
     }
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        final ListBean bean = (ListBean) adapter.getData().get(position);
+        final ListBean bean = (ListBean)adapter.getData().get(position);
         int id = bean.getId();
         switch (id) {
-            case 1:
-                mDelegate.getParentDelegate().start(bean.getDelegate());
+            case 3:
+                //这是消息推送的开关
                 break;
             case 2:
-                mDelegate.getParentDelegate().start(bean.getDelegate());
+                mDelegate.getSupportDelegate().start(bean.getDelegate());
                 break;
             default:
                 break;
         }
+
     }
 
     @Override

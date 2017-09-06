@@ -1,77 +1,65 @@
-package com.example.stream.eb.main.self;
+package com.example.stream.eb.main.self.setting;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.Toast;
 
-import com.example.stream.core.delegates.bottom.BottomPageDelegate;
+import com.example.stream.core.delegates.StreamDelegate;
 import com.example.stream.eb.R;
 import com.example.stream.eb.R2;
 import com.example.stream.eb.main.self.address.AddressDelegate;
 import com.example.stream.eb.main.self.list.ListAdapter;
 import com.example.stream.eb.main.self.list.ListBean;
 import com.example.stream.eb.main.self.list.ListItemType;
-import com.example.stream.eb.main.self.order.OrderListDelegate;
-import com.example.stream.eb.main.self.profile.ProfileDelegate;
-import com.example.stream.eb.main.self.setting.SettingDelegate;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
- * Created by StReaM on 9/3/2017.
+ * Created by StReaM on 9/6/2017.
  */
 
-public class SelfDelegate extends BottomPageDelegate {
+public class SettingDelegate extends StreamDelegate {
 
-    public static final String ORDER_TYPE = "order_type";
-    private Bundle mBundle = new Bundle();
-
-    @BindView(R2.id.rv_profile_setting)
+    @BindView(R2.id.rv_settings)
     RecyclerView mRecyclerView = null;
-
-    private void startOrderListByType() {
-        final OrderListDelegate delegate = new OrderListDelegate();
-        delegate.setArguments(mBundle);
-        getParentDelegate().start(delegate);
-    }
-
-    @OnClick(R2.id.tv_all_order)
-    void onAllOrderClick() {
-        mBundle.putString(ORDER_TYPE, "all");
-        startOrderListByType();
-    }
-
-    @OnClick(R2.id.img_user_avatar)
-    void onAvatarClick() {
-        getParentDelegate().start(new ProfileDelegate());
-    }
 
     @Override
     public Object setLayout() {
-        return R.layout.delegate_self;
+        return R.layout.delegate_setting;
     }
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
         ListBean addr = new ListBean.Builder()
-                .setItemType(ListItemType.ITEM_NORMAL)
-                .setId(1)
-                .setText("收货地址")
+                .setItemType(ListItemType.ITEM_SWITCH)
+                .setId(3)
+                .setText("消息推送")
                 .setDelegate(new AddressDelegate())
+                .setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean on) {
+                        if (on) {
+                            Toast.makeText(getContext(), "打开推送", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(getContext(), "关闭推送", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                })
                 .setValue("")
                 .build();
 
         ListBean sys = new ListBean.Builder()
                 .setItemType(ListItemType.ITEM_NORMAL)
                 .setId(2)
-                .setText("系统设置")
-                .setDelegate(new SettingDelegate())
+                .setText("关于")
+                .setDelegate(new AboutDelegate())
                 .setValue("")
                 .build();
 
@@ -82,6 +70,6 @@ public class SelfDelegate extends BottomPageDelegate {
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setAdapter(adapter);
-        mRecyclerView.addOnItemTouchListener(new SelfClickListener(this));
+        mRecyclerView.addOnItemTouchListener(new SettingClickListener(this));
     }
 }

@@ -43,8 +43,6 @@ public class AddressAdapter extends ComplexRecyclerAdapter {
                 tvPhoneText.setText(phone);
                 tvAddress.setText(address);
 
-
-
                 tvDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
