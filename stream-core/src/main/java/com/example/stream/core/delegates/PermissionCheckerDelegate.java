@@ -31,8 +31,8 @@ import permissions.dispatcher.RuntimePermissions;
 public abstract class PermissionCheckerDelegate extends BaseDelegate {
 
     // 不是直接调用的方法，只是用来生成代码
-    // 由于后续需要 crop，所以附加了读写存储权限，但是在前面的调用中，并没有显式请求，所以不存在
-    // requestCode
+    // 由于后续需要 crop，所以附加了读写存储权限，但是在前面的调用中，并没有显式请求，
+    // 所以不存在 requestCode
     @NeedsPermission({Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE})
     void startCamera() {
@@ -41,6 +41,7 @@ public abstract class PermissionCheckerDelegate extends BaseDelegate {
 
     // 调用这个
     public void startCameraWithCheck() {
+        // 这个类是生成的代码
         PermissionCheckerDelegatePermissionsDispatcher
                 .startCameraWithCheck(this);
     }

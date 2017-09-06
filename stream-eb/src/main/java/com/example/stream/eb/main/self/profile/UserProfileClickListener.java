@@ -57,6 +57,7 @@ public class UserProfileClickListener extends SimpleClickListener {
                                 Glide.with(mDelegate)
                                         .load(args)
                                         .into(avatar);
+                                // todo 通知服务器更新, 并且更新本地数据库
                             }
                         });
                 mDelegate.startCameraWithCheck();

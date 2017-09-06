@@ -9,6 +9,7 @@ import android.view.View;
 import com.example.stream.core.delegates.bottom.BottomPageDelegate;
 import com.example.stream.eb.R;
 import com.example.stream.eb.R2;
+import com.example.stream.eb.main.self.address.AddressDelegate;
 import com.example.stream.eb.main.self.list.ListAdapter;
 import com.example.stream.eb.main.self.list.ListBean;
 import com.example.stream.eb.main.self.list.ListItemType;
@@ -61,6 +62,7 @@ public class SelfDelegate extends BottomPageDelegate {
                 .setItemType(ListItemType.ITEM_NORMAL)
                 .setId(1)
                 .setText("收货地址")
+                .setDelegate(new AddressDelegate())
                 .setValue("")
                 .build();
 
@@ -78,5 +80,6 @@ public class SelfDelegate extends BottomPageDelegate {
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setAdapter(adapter);
+        mRecyclerView.addOnItemTouchListener(new SelfClickListener(this));
     }
 }
