@@ -7,6 +7,7 @@ import com.example.stream.core.ui.recycler.ComplexFields;
 import com.example.stream.core.ui.recycler.ComplexItemEntity;
 import com.example.stream.core.ui.recycler.DataConverter;
 import com.example.stream.core.ui.recycler.ItemType;
+import com.example.stream.core.util.log.StreamLogger;
 
 import java.util.ArrayList;
 

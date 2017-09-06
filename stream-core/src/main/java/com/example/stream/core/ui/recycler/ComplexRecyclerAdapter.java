@@ -12,7 +12,10 @@ import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.stream.core.R;
+import com.example.stream.core.delegates.StreamDelegate;
 import com.example.stream.core.ui.banner.BannerCreator;
+import com.example.stream.core.ui.loader.StreamLoader;
+import com.example.stream.core.util.log.StreamLogger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,7 +81,7 @@ public class ComplexRecyclerAdapter
                         .into((ImageView) helper.getView(R.id.complex_img));
                 break;
             case ItemType.BANNER:
-                if (mIsBannerInitialized) {
+                if (!mIsBannerInitialized) {
                     bannerImages = item.getField(ComplexFields.BANNERS);
                     final ConvenientBanner<String> convenientBanner = helper.getView(R.id.rv_banner);
                     BannerCreator.setDefault(convenientBanner, bannerImages, this);
