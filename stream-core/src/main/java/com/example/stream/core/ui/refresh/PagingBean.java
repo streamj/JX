@@ -9,7 +9,7 @@ public final class PagingBean {
 
     private int mTotalItemCount = 0;
 
-    private int mItemCountPerPage = 0;
+    private int mPageCapacity = 0;
 
     private int mCurrentItemCount = 0;
 
@@ -33,12 +33,12 @@ public final class PagingBean {
         return this;
     }
 
-    public int getItemCountPerPage() {
-        return mItemCountPerPage;
+    public int getPageCapacity() {
+        return mPageCapacity;
     }
 
-    public PagingBean setItemCountPerPage(int itemCountPerPage) {
-        mItemCountPerPage = itemCountPerPage;
+    public PagingBean setPageCapacity(int pageCapacity) {
+        mPageCapacity = pageCapacity;
         return this;
     }
 

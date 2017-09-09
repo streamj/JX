@@ -1,7 +1,6 @@
 package com.example.stream.core.ui.refresh;
 
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSON;
@@ -61,7 +60,7 @@ public class RefreshHandler implements SwipeRefreshLayout.OnRefreshListener, Bas
                         // get the total item count and item count per page for paging
                         final JSONObject jsonObject = JSON.parseObject(response);
                         BEAN.setTotalItemCount(jsonObject.getInteger("total"))
-                                .setItemCountPerPage(jsonObject.getInteger("page_size"));
+                                .setPageCapacity(jsonObject.getInteger("page_size"));
                         // pass response directly to the adapter
                         mAdapter = ComplexRecyclerAdapter.create(CONVERTER.setJsonData(response));
                         mAdapter.setOnLoadMoreListener(RefreshHandler.this, RECYCLER_VIEW);
@@ -73,6 +72,38 @@ public class RefreshHandler implements SwipeRefreshLayout.OnRefreshListener, Bas
                 .get();
     }
 
+    private void paging(final String url) {
+        final int pageCapacity = BEAN.getPageCapacity();
+        final int currentCount = BEAN.getCurrentItemCount();
+        final int total = BEAN.getTotalItemCount();
+        final int index = BEAN.getPageIndex();
+
+        if (mAdapter.getData().size() < pageCapacity || currentCount >= total) {
+            mAdapter.loadMoreEnd(true);
+            BEAN.setTotalItemCount(currentCount);
+        } else {
+            StreamCore.getHandler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    RestClient.Builder()
+                            .url(url+index)
+                            .success(new ISuccess() {
+                                @Override
+                                public void onSuccess(String response) {
+                                    mAdapter.addData(CONVERTER.setJsonData(response).convert());
+                                    BEAN.setCurrentItemCount(mAdapter.getData().size());
+                                    mAdapter.loadMoreComplete();
+                                    BEAN.addIndex();
+                                }
+                            })
+                            .build()
+                            .get();
+                }
+            }, 1000);
+        }
+    }
+
+
     @Override
     public void onRefresh() {
         refresh();
@@ -80,6 +111,6 @@ public class RefreshHandler implements SwipeRefreshLayout.OnRefreshListener, Bas
 
     @Override
     public void onLoadMoreRequested() {
-
+        paging("refresh.php?index=");
     }
 }

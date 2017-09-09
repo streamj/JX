@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.example.stream.core.delegates.StreamDelegate;
-import com.example.stream.core.ui.camera.RequestCodes;
 import com.example.stream.core.util.callback.CallbackManager;
 import com.example.stream.core.util.callback.CallbackType;
 import com.example.stream.core.util.callback.IGlobalCallback;
