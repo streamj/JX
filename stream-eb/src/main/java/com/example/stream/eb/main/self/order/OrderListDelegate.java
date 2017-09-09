@@ -62,6 +62,7 @@ public class OrderListDelegate extends StreamDelegate {
                         final LinearLayoutManager manager = new LinearLayoutManager(getContext());
                         mRecyclerView.setLayoutManager(manager);
                         mRecyclerView.setAdapter(adapter);
+                        mRecyclerView.addOnItemTouchListener(new OrderListClickListener(OrderListDelegate.this));
                     }
                 })
                 .build()

@@ -31,7 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="center"
-        android:background="@drawable/btn_border_nativephoto"
+        android:background="@drawable/btn_border_local_photo"
         android:gravity="center"
         android:text="本地"
         android:textColor="#323232" />
