@@ -6,5 +6,5 @@ package com.example.stream.core.util.callback;
 
 public enum CallbackType {
     ON_CROP,
-
+    ON_SCAN,
 }

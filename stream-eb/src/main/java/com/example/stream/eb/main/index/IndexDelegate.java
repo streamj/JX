@@ -9,16 +9,21 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.stream.core.delegates.bottom.BottomPageDelegate;
 import com.example.stream.core.ui.recycler.BaseDecoration;
 import com.example.stream.core.ui.refresh.RefreshHandler;
+import com.example.stream.core.util.callback.CallbackManager;
+import com.example.stream.core.util.callback.CallbackType;
+import com.example.stream.core.util.callback.IGlobalCallback;
 import com.example.stream.eb.R;
 import com.example.stream.eb.R2;
 import com.example.stream.eb.main.EbBottomDelegate;
 import com.joanzapata.iconify.widget.IconTextView;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by StReaM on 8/21/2017.
@@ -40,6 +45,11 @@ public class IndexDelegate extends BottomPageDelegate {
     @BindView(R2.id.index_search_view)
     AppCompatEditText mSearchView = null;
 
+    @OnClick(R2.id.index_scan)
+    void onClickScan() {
+        startScanWithCheck(this.getParentDelegate());
+    }
+
     private RefreshHandler mRefreshHandler = null;
 
     @Override
@@ -50,7 +60,12 @@ public class IndexDelegate extends BottomPageDelegate {
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
         mRefreshHandler = RefreshHandler.create(mSwipeRefreshLayout, mRecyclerView, new IndexDataConverter());
-
+        CallbackManager.getInstance().addCallback(CallbackType.ON_SCAN, new IGlobalCallback<String>() {
+            @Override
+            public void executeCallback(String args) {
+                Toast.makeText(getContext(), "二维码是"+args, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override

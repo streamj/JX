@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 import com.example.stream.core.ui.camera.CameraImageBean;
 import com.example.stream.core.ui.camera.RequestCodes;
 import com.example.stream.core.ui.camera.StreamCamera;
+import com.example.stream.core.ui.scanner.ScannerDelegate;
 import com.example.stream.core.util.callback.CallbackManager;
 import com.example.stream.core.util.callback.CallbackType;
 import com.example.stream.core.util.callback.IGlobalCallback;
@@ -44,6 +46,16 @@ public abstract class PermissionCheckerDelegate extends BaseDelegate {
         // 这个类是生成的代码
         PermissionCheckerDelegatePermissionsDispatcher
                 .startCameraWithCheck(this);
+    }
+
+    @NeedsPermission(Manifest.permission.CAMERA)
+    void startScan(StreamDelegate delegate) {
+        delegate.startForResult(new ScannerDelegate(), RequestCodes.SCAN);
+    }
+
+    public void startScanWithCheck(StreamDelegate delegate) {
+        PermissionCheckerDelegatePermissionsDispatcher
+                .startScanWithCheck(this, delegate);
     }
 
     @OnPermissionDenied({Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE,
