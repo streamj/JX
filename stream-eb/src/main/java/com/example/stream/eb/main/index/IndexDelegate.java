@@ -20,6 +20,7 @@ import com.example.stream.core.util.callback.IGlobalCallback;
 import com.example.stream.eb.R;
 import com.example.stream.eb.R2;
 import com.example.stream.eb.main.EbBottomDelegate;
+import com.example.stream.eb.main.index.search.SearchDelegate;
 import com.joanzapata.iconify.widget.IconTextView;
 
 import butterknife.BindView;
@@ -29,7 +30,7 @@ import butterknife.OnClick;
  * Created by StReaM on 8/21/2017.
  */
 
-public class IndexDelegate extends BottomPageDelegate {
+public class IndexDelegate extends BottomPageDelegate implements View.OnFocusChangeListener {
     @BindView(R2.id.index_rv)
     RecyclerView mRecyclerView = null;
 
@@ -66,6 +67,7 @@ public class IndexDelegate extends BottomPageDelegate {
                 Toast.makeText(getContext(), "二维码是"+args, Toast.LENGTH_LONG).show();
             }
         });
+        mSearchView.setOnFocusChangeListener(this);
     }
 
     @Override
@@ -99,5 +101,12 @@ public class IndexDelegate extends BottomPageDelegate {
         // then big to small
         // the two other indicate the start height and end height
         mSwipeRefreshLayout.setProgressViewOffset(true, 120, 300);
+    }
+
+    @Override
+    public void onFocusChange(View view, boolean focus) {
+        if (focus) {
+            getParentDelegate().start(new SearchDelegate());
+        }
     }
 }

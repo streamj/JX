@@ -12,7 +12,7 @@ import com.example.stream.core.delegates.StreamDelegate;
 import com.example.stream.core.ui.launcher.ILauncherListener;
 import com.example.stream.core.ui.launcher.OnLauncherFinishTag;
 import com.example.stream.core.ui.launcher.ScrollLauncherTag;
-import com.example.stream.core.util.storage.Preference;
+import com.example.stream.core.util.storage.StreamPreference;
 import com.example.stream.core.util.timer.BaseTimerTask;
 import com.example.stream.core.util.timer.ITimerListener;
 import com.example.stream.eb.R;
@@ -74,7 +74,7 @@ public class LauncherDelegate extends StreamDelegate implements ITimerListener{
 
     private void checkIfShowSrcoll() {
         // 如果不是第一次登录
-        if (!Preference.getAppFlag(ScrollLauncherTag.LAUNCH_FIRST_TIME.name())) {
+        if (!StreamPreference.getAppFlag(ScrollLauncherTag.LAUNCH_FIRST_TIME.name())) {
             start(new LauncherScrollDelegate(), SINGLETASK);
         } else {
             // 检查用户是否登录了 app

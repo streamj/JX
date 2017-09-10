@@ -1,6 +1,6 @@
 package com.example.stream.core.network.rx;
 
-import com.example.stream.core.util.storage.Preference;
+import com.example.stream.core.util.storage.StreamPreference;
 
 import java.io.IOException;
 
@@ -20,7 +20,7 @@ public class AddCookieInterceptor implements Interceptor {
     public Response intercept(@android.support.annotation.NonNull Chain chain) throws IOException {
         final Request.Builder builder = chain.request().newBuilder();
         Observable
-                .just(Preference.getCustomAppProfile("Cookie"))
+                .just(StreamPreference.getCustomAppProfile("Cookie"))
                 .subscribe(new Consumer<String>() {
                     @Override
                     public void accept(@NonNull String cookie) throws Exception {

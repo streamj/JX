@@ -14,7 +14,7 @@ import com.example.stream.core.ui.launcher.ILauncherListener;
 import com.example.stream.core.ui.launcher.LauncherHolderCreator;
 import com.example.stream.core.ui.launcher.OnLauncherFinishTag;
 import com.example.stream.core.ui.launcher.ScrollLauncherTag;
-import com.example.stream.core.util.storage.Preference;
+import com.example.stream.core.util.storage.StreamPreference;
 import com.example.stream.eb.R;
 
 import java.util.ArrayList;
@@ -71,7 +71,7 @@ public class LauncherScrollDelegate extends StreamDelegate implements OnItemClic
     @Override
     public void onItemClick(int position) {
         if(position == INTEGERS.size() - 1) {
-            Preference.setAppFlag(ScrollLauncherTag.LAUNCH_FIRST_TIME.name(), true);
+            StreamPreference.setAppFlag(ScrollLauncherTag.LAUNCH_FIRST_TIME.name(), true);
             //  检查用户是否已经登录
             // 检查用户是否登录了 app
             AccountManager.checkAccount(new IUserChecker() {

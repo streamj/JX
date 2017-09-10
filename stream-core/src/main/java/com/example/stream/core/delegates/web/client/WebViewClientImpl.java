@@ -14,7 +14,7 @@ import com.example.stream.core.delegates.web.BaseWebDelegate;
 import com.example.stream.core.delegates.web.route.Router;
 import com.example.stream.core.ui.loader.StreamLoader;
 import com.example.stream.core.util.log.StreamLogger;
-import com.example.stream.core.util.storage.Preference;
+import com.example.stream.core.util.storage.StreamPreference;
 
 /**
  * Created by StReaM on 8/28/2017.
@@ -71,7 +71,7 @@ public class WebViewClientImpl extends WebViewClient {
         if (webHost != null) {
             final String cookieStr = cookieManager.getCookie(webHost);
             if (cookieStr != null && !TextUtils.isEmpty(cookieStr)) {
-                Preference.addCustomAppProfile("cookie", cookieStr);
+                StreamPreference.addCustomAppProfile("cookie", cookieStr);
             }
         }
     }

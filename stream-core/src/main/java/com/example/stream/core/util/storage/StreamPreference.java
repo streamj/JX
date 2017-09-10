@@ -11,7 +11,7 @@ import com.example.stream.core.app.StreamCore;
  * Created by StReaM on 8/17/2017.
  */
 
-public final class Preference {
+public final class StreamPreference {
     private static final SharedPreferences PREFERENCES =
             PreferenceManager.getDefaultSharedPreferences(StreamCore.getApplicationContext());
     private static final String APP_PREFERENCES_KEY = "profile";
