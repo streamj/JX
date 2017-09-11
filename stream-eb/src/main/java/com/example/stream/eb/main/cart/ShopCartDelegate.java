@@ -58,11 +58,13 @@ public class ShopCartDelegate extends BottomPageDelegate
             mIconSelectAll.setTag(1);
             mAdapter.setSelectAll(true);
             mAdapter.notifyItemRangeChanged(0, mAdapter.getItemCount());
+            mTvTotalPrice.setText(String.valueOf(mAdapter.getTotalPrice()));
         } else {
             mIconSelectAll.setTextColor(Color.GRAY);
             mIconSelectAll.setTag(0);
             mAdapter.setSelectAll(false);
             mAdapter.notifyItemRangeChanged(0, mAdapter.getItemCount());
+            mTvTotalPrice.setText(String.valueOf(mAdapter.getTotalPrice()));
         }
     }
 
@@ -72,34 +74,39 @@ public class ShopCartDelegate extends BottomPageDelegate
         final List<ComplexItemEntity> dataList = mAdapter.getData();
         final List<Integer> deleteIndex = new ArrayList<>();
         final int size = dataList.size();
-        for (int i = 0; i < size; i++) {
-            ComplexItemEntity entity = dataList.get(i);
-            final boolean selected = entity.getField(ShopCartItemFields.SELECTED);
-            if (selected) {
-                deleteIndex.add(i);
+        if (size > 0) {
+            for (int i = 0; i < size; i++) {
+                ComplexItemEntity entity = dataList.get(i);
+                final boolean selected = entity.getField(ShopCartItemFields.SELECTED);
+                if (selected) {
+                    deleteIndex.add(i);
+                }
             }
+            // reverse deleting, prevent from IndexOutOfBoundsException
+            Collections.reverse(deleteIndex);
+            double priceDecrease = 0.0;
+            for (Integer i : deleteIndex) {
+                ComplexItemEntity entity = dataList.get(i);
+                int count = entity.getField(ShopCartItemFields.COUNT);
+                double price = entity.getField(ShopCartItemFields.PRICE);
+                dataList.remove((int) i);
+                priceDecrease += (count * price);
+            }
+            mAdapter.totalPriceDecrease(priceDecrease);
+            mTvTotalPrice.setText(String.valueOf(mAdapter.getTotalPrice()));
+            mAdapter.notifyDataSetChanged();
+            checkItemCounnt();
         }
-        // reverse deleting, prevent from IndexOutOfBoundsException
-        Collections.reverse(deleteIndex);
-        double priceDecrese = 0.0;
-        for (Integer i : deleteIndex) {
-            ComplexItemEntity entity = dataList.get(i);
-            int count = entity.getField(ShopCartItemFields.COUNT);
-            double price = entity.getField(ShopCartItemFields.PRICE);
-            dataList.remove((int)i);
-            priceDecrese += (count * price);
-        }
-        mAdapter.totalPriceDecrease(priceDecrese);
-        mTvTotalPrice.setText(String.valueOf(mAdapter.getTotalPrice()));
-        mAdapter.notifyDataSetChanged();
-        checkItemCounnt();
     }
 
     @OnClick(R2.id.tv_clear_cart)
     void onClickClearCart() {
-        mAdapter.getData().clear();
-        mAdapter.notifyDataSetChanged();
-        checkItemCounnt();
+        final List<ComplexItemEntity> dataList = mAdapter.getData();
+        if (dataList.size() > 0) {
+            dataList.clear();
+            mAdapter.notifyDataSetChanged();
+            checkItemCounnt();
+        }
     }
 
     @OnClick(R2.id.tv_cart_settle)
@@ -193,9 +200,19 @@ public class ShopCartDelegate extends BottomPageDelegate
     }
 
     @Override
-    public void onItemCountChange(double changedPrice) {
+    public void onItemCountChange() {
         final double totalPrice = mAdapter.getTotalPrice();
         mTvTotalPrice.setText(String.valueOf(totalPrice));
+    }
+
+    @Override
+    public void onSelectAllChange(boolean selectAll) {
+        if (selectAll) {
+            mIconSelectAll
+                    .setTextColor(ContextCompat.getColor(getContext(), R.color.item_choose));
+        } else {
+            mIconSelectAll.setTextColor(Color.GRAY);
+        }
     }
 
     @Override

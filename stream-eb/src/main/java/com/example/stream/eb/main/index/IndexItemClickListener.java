@@ -5,6 +5,8 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.SimpleClickListener;
 import com.example.stream.core.delegates.StreamDelegate;
+import com.example.stream.core.ui.recycler.ComplexFields;
+import com.example.stream.core.ui.recycler.ComplexItemEntity;
 import com.example.stream.eb.detail.ProductDetailDelegate;
 
 /**
@@ -25,7 +27,9 @@ public class IndexItemClickListener extends SimpleClickListener {
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        final ProductDetailDelegate productDetailDelegate = ProductDetailDelegate.create();
+        ComplexItemEntity entity = (ComplexItemEntity) adapter.getData().get(position);
+        int productId = entity.getField(ComplexFields.ID);
+        final ProductDetailDelegate productDetailDelegate = ProductDetailDelegate.create(productId);
         DELEGATE.start(productDetailDelegate);
     }
 

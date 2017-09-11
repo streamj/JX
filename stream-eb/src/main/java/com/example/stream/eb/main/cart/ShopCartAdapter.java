@@ -17,9 +17,14 @@ import com.example.stream.core.ui.recycler.ComplexItemEntity;
 import com.example.stream.core.ui.recycler.ComplexRecyclerAdapter;
 import com.example.stream.core.ui.recycler.ComplexViewHolder;
 import com.example.stream.eb.R;
+import com.example.stream.eb.R2;
+import com.joanzapata.iconify.Icon;
 import com.joanzapata.iconify.widget.IconTextView;
 
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by StReaM on 8/30/2017.
@@ -30,6 +35,8 @@ public class ShopCartAdapter extends ComplexRecyclerAdapter {
     private boolean mSelectAll = false;
     private ICartItemListener mICartItemListener = null;
     private double mTotalPrice = 0.0;
+    private List<ComplexItemEntity> mData = null;
+    private int mSize = 0;
 
     public double getTotalPrice() {
         return mTotalPrice;
@@ -50,20 +57,29 @@ public class ShopCartAdapter extends ComplexRecyclerAdapter {
 
     protected ShopCartAdapter(List<ComplexItemEntity> data) {
         super(data);
-        calculateTotalPrice(data);
+        mData = data;
+        calculateTotalPrice();
         addItemType(ShopCartItemType.SHOP_CART_ITEM, R.layout.item_shop_cart);
     }
 
-    private void calculateTotalPrice(List<ComplexItemEntity> data) {
-        for (ComplexItemEntity entity: data) {
-            final double price = entity.getField(ShopCartItemFields.PRICE);
-            final int count = entity.getField(ShopCartItemFields.COUNT);
-            mTotalPrice += (price * count);
+    private void calculateTotalPrice() {
+        mTotalPrice = 0;
+        for (ComplexItemEntity entity: mData) {
+            final boolean selected = entity.getField(ShopCartItemFields.SELECTED);
+            if (selected) {
+                final double price = entity.getField(ShopCartItemFields.PRICE);
+                final int count = entity.getField(ShopCartItemFields.COUNT);
+                mTotalPrice += (price * count);
+            }
         }
     }
 
     public void setSelectAll(boolean selected){
         mSelectAll = selected;
+        for(ComplexItemEntity entity: mData) {
+            entity.setField(ShopCartItemFields.SELECTED, selected);
+        }
+        calculateTotalPrice();
     }
 
 
@@ -87,7 +103,6 @@ public class ShopCartAdapter extends ComplexRecyclerAdapter {
                 final IconTextView selectedIText = helper.getView(R.id.cart_icon_select);
                 final IconTextView minus = helper.getView(R.id.icon_item_minus);
                 final IconTextView plus = helper.getView(R.id.icon_item_plus);
-                final IconTextView selectAll = helper.getView(R.id.icon_select_all);
 
                 tvTitle.setText(title);
                 tvDesc.setText(desc);
@@ -115,14 +130,46 @@ public class ShopCartAdapter extends ComplexRecyclerAdapter {
                 selectedIText.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        mSize =  mData.size();
+                        final int currentCount = item.getField(ShopCartItemFields.COUNT);
                         final boolean currentSelect =
                                 item.getField(ShopCartItemFields.SELECTED);
                         if (currentSelect) {
                             selectedIText.setTextColor(Color.GRAY);
                             item.setField(ShopCartItemFields.SELECTED, false);
+                            mTotalPrice -= price * currentCount;
+                            mICartItemListener.onItemCountChange();
+                            int i = 0;
+                            for(ComplexItemEntity entity: mData) {
+                                boolean selected = entity.getField(ShopCartItemFields.SELECTED);
+                                if (selected) {
+                                    i++;
+                                }
+                            }
+                            if (mSize - i == 1) {
+                                mSelectAll = false;
+                                if (mICartItemListener != null) {
+                                    mICartItemListener.onSelectAllChange(mSelectAll);
+                                }
+                            }
                         } else {
                             selectedIText.setTextColor(selectedColor);
                             item.setField(ShopCartItemFields.SELECTED, true);
+                            mTotalPrice += price * currentCount;
+                            mICartItemListener.onItemCountChange();
+                            int i = 0;
+                            for(ComplexItemEntity entity: mData) {
+                                boolean selected = entity.getField(ShopCartItemFields.SELECTED);
+                                if (selected) {
+                                    i++;
+                                }
+                            }
+                            if (mSize == i) {
+                                mSelectAll = true;
+                                if (mICartItemListener != null) {
+                                    mICartItemListener.onSelectAllChange(mSelectAll);
+                                }
+                            }
                         }
                     }
                 });
@@ -143,9 +190,12 @@ public class ShopCartAdapter extends ComplexRecyclerAdapter {
                                             count--;
                                             tvCount.setText(String.valueOf(count));
                                             item.setField(ShopCartItemFields.COUNT, count);
-                                            if (mICartItemListener != null) {
-                                                mTotalPrice -= price;
-                                                mICartItemListener.onItemCountChange(price);
+                                            boolean selected = item.getField(ShopCartItemFields.SELECTED);
+                                            if (selected) {
+                                                if (mICartItemListener != null) {
+                                                    mTotalPrice -= price;
+                                                    mICartItemListener.onItemCountChange();
+                                                }
                                             }
                                         }
                                     })
@@ -168,9 +218,12 @@ public class ShopCartAdapter extends ComplexRecyclerAdapter {
                                         count++;
                                         tvCount.setText(String.valueOf(count));
                                         item.setField(ShopCartItemFields.COUNT, count);
-                                        if (mICartItemListener != null) {
-                                            mTotalPrice += price;
-                                            mICartItemListener.onItemCountChange(price);
+                                        boolean selected = item.getField(ShopCartItemFields.SELECTED);
+                                        if (selected) {
+                                            if (mICartItemListener != null) {
+                                                mTotalPrice += price;
+                                                mICartItemListener.onItemCountChange();
+                                            }
                                         }
                                     }
                                 })

@@ -6,5 +6,7 @@ package com.example.stream.eb.main.cart;
 
 public interface ICartItemListener {
 
-    void onItemCountChange(double changedPrice);
+    void onItemCountChange();
+
+    void onSelectAllChange(boolean selectAll);
 }
