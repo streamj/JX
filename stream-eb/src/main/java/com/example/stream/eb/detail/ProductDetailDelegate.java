@@ -8,6 +8,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -24,7 +25,9 @@ import com.example.stream.core.delegates.StreamDelegate;
 import com.example.stream.core.network.RestClient;
 import com.example.stream.core.network.callback.ISuccess;
 import com.example.stream.core.ui.banner.BannerImageHolderCreator;
+import com.example.stream.core.ui.loader.StreamLoader;
 import com.example.stream.core.ui.view.CircleTextView;
+import com.example.stream.core.util.log.StreamLogger;
 import com.example.stream.eb.R;
 import com.example.stream.eb.R2;
 import com.joanzapata.iconify.widget.IconTextView;
@@ -94,6 +97,7 @@ public class ProductDetailDelegate extends StreamDelegate implements AppBarLayou
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
         mCollapsingToolbarLayout.setContentScrimColor(Color.WHITE);
         initData();
+        initTabLayout();
     }
 
     private void initData(){
@@ -108,6 +112,9 @@ public class ProductDetailDelegate extends StreamDelegate implements AppBarLayou
                             JSONObject data = JSON.parseObject(response).getJSONObject("data");
                             initBanner(data);
                             initProductInfo(data);
+                            if (data.getJSONArray("tabs") != null) {
+                                initPager(data);
+                            }
                         } else {
                             Toast.makeText(getContext(), "暂时没有详情", Toast.LENGTH_LONG).show();
                         }
@@ -147,6 +154,10 @@ public class ProductDetailDelegate extends StreamDelegate implements AppBarLayou
         mTabLayout.setupWithViewPager(mViewPager);
     }
 
+    private void initPager(JSONObject jsonObject) {
+        final PagerAdapter adapter = new TabPagerAdapter(getFragmentManager(), jsonObject);
+        mViewPager.setAdapter(adapter);
+    }
 
     @Override
     public FragmentAnimator onCreateFragmentAnimator() {
