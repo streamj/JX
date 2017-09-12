@@ -21,13 +21,17 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bigkoo.convenientbanner.ConvenientBanner;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.daimajia.androidanimations.library.YoYo;
 import com.example.stream.core.delegates.StreamDelegate;
 import com.example.stream.core.network.RestClient;
 import com.example.stream.core.network.callback.ISuccess;
+import com.example.stream.core.ui.animation.BezierAnimation;
+import com.example.stream.core.ui.animation.BezierUtil;
 import com.example.stream.core.ui.banner.BannerImageHolderCreator;
-import com.example.stream.core.ui.loader.StreamLoader;
 import com.example.stream.core.ui.view.CircleTextView;
-import com.example.stream.core.util.log.StreamLogger;
 import com.example.stream.eb.R;
 import com.example.stream.eb.R2;
 import com.joanzapata.iconify.widget.IconTextView;
@@ -36,6 +40,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
@@ -43,7 +49,9 @@ import me.yokeyword.fragmentation.anim.FragmentAnimator;
  * Created by StReaM on 8/26/2017.
  */
 
-public class ProductDetailDelegate extends StreamDelegate implements AppBarLayout.OnOffsetChangedListener{
+public class ProductDetailDelegate extends StreamDelegate
+        implements AppBarLayout.OnOffsetChangedListener,
+        BezierUtil.AnimationListener {
 
     @BindView(R2.id.goods_detail_toolbar)
     Toolbar mToolbar = null;
@@ -71,6 +79,32 @@ public class ProductDetailDelegate extends StreamDelegate implements AppBarLayou
     private static final String PRODUCT_ID = "PRODUCT_ID";
     private int mProductId = -1;
 
+    private String mProductThumbUrl = null;
+    private int mShopCount = 0;
+
+    private static final RequestOptions OPTIONS = new RequestOptions()
+            .dontAnimate()
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .centerCrop()
+            .override(100, 100);
+
+    @OnClick(R2.id.rl_add_shop_cart)
+    void onAddShopCart(){
+        final CircleImageView circleImageView = new CircleImageView(getContext());
+        Glide.with(this)
+                .load(mProductThumbUrl)
+                .apply(OPTIONS)
+                .into(circleImageView);
+        BezierAnimation.addCart(this, mRlAddShopCart, mIconShopCart, circleImageView, this);
+    }
+
+    private void setShopCartCount(JSONObject data) {
+        mProductThumbUrl = data.getString("thumb");
+        if (mShopCount == 0) {
+            mCircleTextView.setVisibility(View.GONE);
+        }
+    }
+
     public static ProductDetailDelegate create(int productId) {
         final Bundle args = new Bundle();
         args.putInt(PRODUCT_ID, productId);
@@ -96,6 +130,8 @@ public class ProductDetailDelegate extends StreamDelegate implements AppBarLayou
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
         mCollapsingToolbarLayout.setContentScrimColor(Color.WHITE);
+        mAppBar.addOnOffsetChangedListener(this);
+        mCircleTextView.setCircleBackground(Color.RED);
         initData();
         initTabLayout();
     }
@@ -115,6 +151,7 @@ public class ProductDetailDelegate extends StreamDelegate implements AppBarLayou
                             if (data.getJSONArray("tabs") != null) {
                                 initPager(data);
                             }
+                            setShopCartCount(data);
                         } else {
                             Toast.makeText(getContext(), "暂时没有详情", Toast.LENGTH_LONG).show();
                         }
@@ -168,5 +205,25 @@ public class ProductDetailDelegate extends StreamDelegate implements AppBarLayou
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
 
+    }
+
+    @Override
+    public void onAnimationEnd() {
+        YoYo.with(new ScaleUpAnimator())
+                .duration(500)
+                .playOn(mIconShopCart);
+        RestClient.Builder()
+                .url("add_shop_cart_count.php")
+                .params("count", mShopCount)
+                .success(new ISuccess() {
+                    @Override
+                    public void onSuccess(String response) {
+                        mShopCount++;
+                        mCircleTextView.setVisibility(View.VISIBLE);
+                        mCircleTextView.setText(String.valueOf(mShopCount));
+                    }
+                })
+                .build()
+                .post();
     }
 }

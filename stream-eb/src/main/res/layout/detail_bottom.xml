@@ -66,8 +66,8 @@
 
         <com.example.stream.core.ui.view.CircleTextView
             android:id="@+id/tv_shopping_cart_amount"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
             android:layout_alignEnd="@+id/icon_shop_cart"
             android:layout_alignParentTop="true"
             android:layout_alignRight="@+id/icon_shop_cart"
