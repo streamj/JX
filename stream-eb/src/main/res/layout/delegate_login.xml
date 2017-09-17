@@ -7,9 +7,10 @@
     <android.support.v7.widget.Toolbar
         android:background="@android:color/holo_blue_dark"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize">
+        android:layout_height="73dp">
 
         <android.support.v7.widget.AppCompatTextView
+            android:layout_marginTop="25dp"
             android:gravity="center"
             android:text="登录"
             android:textSize="20sp"
@@ -92,6 +93,7 @@
             <com.joanzapata.iconify.widget.IconTextView
                 android:id="@+id/icon_login_with_wechat"
                 android:text="{fa-weixin}"
+                android:padding="5dp"
                 android:textColor="#04b00f"
                 android:textSize="40sp"
                 android:gravity="center"

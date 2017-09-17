@@ -9,9 +9,10 @@
         android:gravity="center"
         android:background="@color/item_choose"
         android:layout_width="match_parent"
-        android:layout_height="75dp">
+        android:layout_height="73dp">
 
         <RelativeLayout
+            android:paddingTop="25dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -19,14 +20,12 @@
                 android:id="@+id/tv_clear_cart"
                 android:text="清空购物车"
                 android:textSize="13sp"
-                android:paddingTop="20dp"
                 android:gravity="center"
                 android:layout_alignParentLeft="true"
                 android:layout_marginLeft="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"/>
             <android.support.v7.widget.AppCompatTextView
-                android:paddingTop="20dp"
                 android:text="购物车"
                 android:textSize="18sp"
                 android:gravity="center"
@@ -36,7 +35,6 @@
                 android:layout_height="match_parent"/>
 
             <android.support.v7.widget.AppCompatTextView
-                android:paddingTop="20dp"
                 android:id="@+id/tv_delete_product"
                 android:text="删除商品"
                 android:textSize="13sp"

@@ -23,17 +23,18 @@
         android:background="@android:color/transparent"
         app:layout_behavior="com.example.stream.eb.main.index.TranslucentBehavior"
         android:layout_width="match_parent"
-        android:layout_height="80dp">
+        android:layout_height="73dp">
 
         <android.support.v7.widget.LinearLayoutCompat
             android:orientation="horizontal"
+            android:layout_marginTop="25dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <com.joanzapata.iconify.widget.IconTextView
                 android:id="@+id/index_scan"
                 android:gravity="center"
-                android:paddingRight="10dp"
+                android:paddingRight="15dp"
                 android:text="{icon-scan}"
                 android:textSize="25sp"
                 android:textColor="@android:color/darker_gray"
@@ -45,7 +46,7 @@
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/index_search_view"
                 android:layout_gravity="center"
-                android:layout_weight="4"
+                android:layout_weight="5"
                 android:layout_width="0dp"
                 android:background="@android:color/white"
                 android:gravity="center_vertical"

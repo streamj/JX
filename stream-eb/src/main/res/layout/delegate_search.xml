@@ -7,11 +7,11 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/tb_main_page"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="73dp"
         android:background="@color/item_choose">
 
         <android.support.v7.widget.LinearLayoutCompat
-            android:paddingTop="20dp"
+            android:paddingTop="25dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
@@ -23,8 +23,8 @@
                 android:layout_gravity="left"
                 android:layout_weight="0.6"
                 android:gravity="center"
-                android:paddingRight="10dp"
-                android:text="{fa-arrow-left}"
+                android:layout_marginRight="10dp"
+                android:text="{fa-chevron-left}"
                 android:textColor="@android:color/white"
                 android:textSize="25sp" />
 
@@ -37,10 +37,13 @@
                 android:background="@android:color/white"
                 android:gravity="center_vertical"
                 android:hint="搜索"
-                android:paddingLeft="20dp" />
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:paddingLeft="16dp" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/tv_top_search"
+                android:padding="10dp"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="right"
@@ -48,7 +51,7 @@
                 android:gravity="center"
                 android:text="搜索"
                 android:textColor="@android:color/white"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
         </android.support.v7.widget.LinearLayoutCompat>
 

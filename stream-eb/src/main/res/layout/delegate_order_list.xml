@@ -8,13 +8,15 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/tb_shop_cart"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
+        android:layout_height="73dp"
         android:background="@color/item_choose"
         android:gravity="center">
 
         <android.support.v7.widget.AppCompatTextView
+            android:layout_marginTop="25dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:padding="5dp"
             android:gravity="center"
             android:text="订单列表"
             android:textColor="@android:color/white"

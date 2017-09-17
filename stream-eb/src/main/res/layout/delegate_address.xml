@@ -6,7 +6,7 @@
 
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="73dp"
         android:background="@color/item_choose">
 
         <RelativeLayout
@@ -18,22 +18,22 @@
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
                 android:gravity="center"
-                android:paddingTop="20dp"
                 android:text="地址管理"
+                android:paddingTop="25dp"
                 android:textColor="@android:color/white"
                 android:textSize="20sp" />
 
             <com.joanzapata.iconify.widget.IconTextView
                 android:id="@+id/icon_address_add"
-                android:paddingTop="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="20dp"
                 android:gravity="center"
-                android:text="{fa-plus-square-o}"
+                android:paddingTop="25dp"
+                android:text="{fa-plus}"
                 android:textColor="@android:color/white"
-                android:textSize="30sp" />
+                android:textSize="20sp" />
 
         </RelativeLayout>
 

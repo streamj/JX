@@ -9,12 +9,12 @@
         android:background="@color/item_choose"
         android:layout_width="match_parent"
         android:gravity="center"
-        android:layout_height="60dp">
+        android:layout_height="73dp">
 
         <android.support.v7.widget.AppCompatTextView
             android:textSize="20sp"
             android:textColor="@android:color/white"
-            android:paddingTop="20dp"
+            android:paddingTop="25dp"
             android:text="分类"
             android:gravity="center"
             android:layout_width="match_parent"
