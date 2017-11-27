@@ -44,7 +44,7 @@ public class LoginDelegate extends StreamDelegate {
     void onClickLogin() {
         if (checkForm()) {
             RestClient.Builder()
-                    .url("http://115.159.35.152/api/user_profile.php")
+                    .url("http://114.67.235.114/RestServer/api/user_profile.php")
                     .params("email", mEmail.getText().toString())
                     .params("password", mPassword.getText().toString())
                     .success(new ISuccess() {

@@ -7,14 +7,11 @@ import android.support.design.widget.TextInputEditText;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.stream.core.delegates.StreamDelegate;
 import com.example.stream.core.network.RestClient;
 import com.example.stream.core.network.callback.IError;
 import com.example.stream.core.network.callback.ISuccess;
-import com.example.stream.core.ui.loader.StreamLoader;
-import com.example.stream.core.util.log.StreamLogger;
 import com.example.stream.eb.R;
 import com.example.stream.eb.R2;
 
@@ -53,7 +50,7 @@ public class SignUpDelegate  extends StreamDelegate {
         if (checkForm()) {
             Log.v("debug", "get here");
             RestClient.Builder()
-                    .url("http://freecloudfx.cc/api/user_profile.php")
+                    .url("http://114.67.235.114/RestServer/api/user_profile.php")
                     .params("name", mUserName.getText().toString())
                     .params("email", mEmail.getText().toString())
                     .params("phone", mPhone.getText().toString())

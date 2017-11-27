@@ -58,6 +58,8 @@ public class TranslucentBehavior extends CoordinatorLayout.Behavior<Toolbar> {
         } else if (mOffset_Y <= 0) {
             // when offset < 0, the view can't scroll, so do not decrease
             mOffset_Y = 0;
+            // forget to set alpha
+            child.getBackground().setAlpha(0);
         }
     }
 }

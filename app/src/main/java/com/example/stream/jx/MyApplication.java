@@ -1,13 +1,12 @@
 package com.example.stream.jx;
 
-import android.app.Application;
 import android.support.multidex.MultiDexApplication;
 
 import com.example.stream.core.app.StreamCore;
 import com.example.stream.core.network.rx.AddCookieInterceptor;
-import com.example.stream.jx.event.TestEvent;
 import com.example.stream.eb.Icon.FontEbModule;
 import com.example.stream.eb.database.DatabaseManager;
+import com.example.stream.jx.event.TestEvent;
 import com.facebook.stetho.Stetho;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
 
@@ -20,7 +19,7 @@ public class MyApplication extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         StreamCore.init(this)
-                .withApiHost("http://115.159.35.152/api/")
+                .withApiHost("http://114.67.235.114/RestServer/api/")
                 .withIcon(new FontAwesomeModule())
                 .withIcon(new FontEbModule())
 //                .withInterceptor(new DebugInterceptor("index", R.raw.mock))
