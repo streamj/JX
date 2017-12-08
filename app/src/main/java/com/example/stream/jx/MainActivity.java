@@ -12,6 +12,7 @@ import com.example.stream.core.ui.launcher.ILauncherListener;
 import com.example.stream.core.ui.launcher.OnLauncherFinishTag;
 import com.example.stream.eb.launcher.LauncherDelegate;
 import com.example.stream.eb.login.ILoginListener;
+import com.example.stream.eb.login.LoginDelegate;
 import com.example.stream.eb.login.SignUpDelegate;
 import com.example.stream.eb.main.EbBottomDelegate;
 
@@ -40,6 +41,7 @@ public class MainActivity extends ProxyActivity implements ILoginListener, ILaun
     @Override
     public void onSignUpSuccess() {
         Toast.makeText(this, "Sign up success!", Toast.LENGTH_LONG).show();
+        startWithPop(new LoginDelegate());
     }
 
     @Override

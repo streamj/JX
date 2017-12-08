@@ -18,7 +18,7 @@ public class AccountManager {
     }
 
     private static boolean isLoggedIn() {
-        return  StreamPreference.getAppFlag(sessionTag.SESSION_TAG.name());
+        return StreamPreference.getAppFlag(sessionTag.SESSION_TAG.name());
     }
 
     public static void checkAccount(IUserChecker checker) {
